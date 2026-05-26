@@ -256,23 +256,29 @@ export default function Overview() {
 
           {/* Upgrade CTA for free users */}
           {!premium && (
-            <div className="bg-gradient-to-bl from-gray-900 to-gray-800 rounded-2xl p-5 text-white relative overflow-hidden">
+            <div className="relative rounded-2xl overflow-hidden" style={{ boxShadow: '0 0 32px rgba(0,108,53,0.18)' }}>
+              <div className="absolute inset-0 bg-gradient-to-br from-[#006C35] to-[#004d26]" />
               <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-l from-transparent via-[#C8A951]/60 to-transparent" />
-              <div className="flex items-center gap-2 mb-2 justify-end">
-                <span className="text-xs font-black text-[#C8A951]">الباقة الكاملة</span>
-                <Crown size={14} className="text-[#C8A951]" />
+              <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl" />
+              <div className="relative p-5 text-white">
+                <div className="flex items-center gap-2 mb-3 justify-end">
+                  <span className="text-xs font-black text-[#C8A951] bg-[#C8A951]/15 border border-[#C8A951]/30 px-2.5 py-0.5 rounded-full">دفعة واحدة</span>
+                  <Crown size={14} className="text-[#C8A951]" />
+                </div>
+                <h3 className="font-black text-base mb-1 text-right">اشتراك قِمّة</h3>
+                <p className="text-xs text-green-200/80 mb-4 text-right leading-relaxed">
+                  جميع الخدمات مفعّلة — البرودكاست · السيرة · الموقع · ١٠٠+ شركة · متابعة الردود
+                </p>
+                <div className="flex items-baseline gap-1.5 justify-end mb-4">
+                  <span className="text-4xl font-black text-white leading-none">٩٩</span>
+                  <span className="text-green-200 font-bold text-sm">ر.س</span>
+                </div>
+                <Link to="/#pricing">
+                  <button className="w-full py-3 rounded-xl font-black text-sm text-[#006C35] bg-white hover:bg-green-50 active:scale-[0.98] transition-all duration-200 shadow-sm">
+                    تفعيل الاشتراك
+                  </button>
+                </Link>
               </div>
-              <h3 className="font-black text-sm mb-1 text-right">فعّل جميع الخدمات الخمس</h3>
-              <p className="text-xs text-gray-400 mb-3 text-right leading-relaxed">
-                البرودكاست · السيرة · الموقع · ١٠٠+ شركة · متابعة الردود
-              </p>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs text-gray-500 line-through">٩٩٩ ريال</span>
-                <span className="text-lg font-black text-white">٤٩٩ ريال<span className="text-xs text-gray-400">/شهر</span></span>
-              </div>
-              <Link to="/#pricing">
-                <Button variant="gold" size="sm" className="w-full">فعّل الآن</Button>
-              </Link>
             </div>
           )}
         </div>
