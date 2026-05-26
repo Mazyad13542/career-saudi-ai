@@ -1,27 +1,22 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
-  LayoutDashboard, FileText, Mic, Briefcase, Star,
-  ClipboardList, MessageSquare, Globe, Settings, LogOut,
-  ChevronRight, ChevronLeft, Crown, UserCircle, Sparkles,
-  Users, BarChart2, BookmarkCheck, Shield, BookOpen, TrendingUp, CreditCard,
+  LayoutDashboard, FileText, Send, Globe, Building2,
+  MessageSquare, Settings, LogOut, ChevronRight, ChevronLeft,
+  Crown, Sparkles, Users, BarChart2, BookmarkCheck, Shield,
+  Briefcase, CreditCard,
 } from 'lucide-react';
 import { cn } from '../../utils/helpers';
 import { useAuth } from '../../context/AuthContext';
 
 const CANDIDATE_NAV = [
-  { icon: LayoutDashboard, label: 'نظرة عامة',           href: '/dashboard' },
-  { icon: FileText,        label: 'سيرتي الذاتية',       href: '/dashboard/cv' },
-  { icon: UserCircle,      label: 'ملفي المهني',          href: '/dashboard/profile' },
-  { icon: TrendingUp,      label: 'مستشار المسيرة',      href: '/dashboard/career-coach' },
-  { icon: Mic,             label: 'المقابلة التجريبية',   href: '/dashboard/interview' },
-  { icon: BookOpen,        label: 'تدريب الإنجليزية',    href: '/dashboard/english' },
-  { icon: Briefcase,       label: 'الوظائف الحديثة',     href: '/dashboard/jobs' },
-  { icon: Star,            label: 'الوظائف المناسبة لي', href: '/dashboard/jobs-for-you' },
-  { icon: ClipboardList,   label: 'متابعة التقديمات',    href: '/dashboard/applications' },
-  { icon: MessageSquare,   label: 'ردود الشركات',        href: '/dashboard/replies' },
-  { icon: Globe,           label: 'موقعي الشخصي',        href: '/dashboard/portfolio' },
-  { icon: CreditCard,      label: 'اشتراكي',              href: '/dashboard/subscription' },
-  { icon: Settings,        label: 'الإعدادات',            href: '/dashboard/settings' },
+  { icon: LayoutDashboard, label: 'الرئيسية',               href: '/dashboard' },
+  { icon: Send,            label: 'البرودكاست',              href: '/dashboard/broadcast' },
+  { icon: FileText,        label: 'السيرة الذاتية',          href: '/dashboard/cv' },
+  { icon: Globe,           label: 'الموقع الشخصي',           href: '/dashboard/portfolio' },
+  { icon: Building2,       label: 'التقديم على الشركات',     href: '/dashboard/applications' },
+  { icon: MessageSquare,   label: 'ردود الشركات',            href: '/dashboard/replies' },
+  { icon: CreditCard,      label: 'اشتراكي',                 href: '/dashboard/subscription' },
+  { icon: Settings,        label: 'الإعدادات',               href: '/dashboard/settings' },
 ];
 
 const HR_NAV = [
@@ -93,7 +88,6 @@ export default function DashboardSidebar({ type = 'candidate', collapsed, onTogg
             {currentType === 'admin' && <span className="text-[10px] text-red-500 font-bold">Admin</span>}
           </div>
         )}
-        {/* Mobile close button */}
         {onClose && !collapsed && (
           <button
             onClick={onClose}
@@ -183,20 +177,20 @@ export default function DashboardSidebar({ type = 'candidate', collapsed, onTogg
           <div className="mx-3 mb-3 p-3 rounded-xl bg-gradient-to-l from-[#C8A951]/15 to-[#C8A951]/5 border border-[#C8A951]/30">
             <div className="flex items-center gap-2">
               <Crown size={13} className="text-[#C8A951]" />
-              <span className="text-[10px] font-black text-[#C8A951]">الخطة الاحترافية ✓</span>
+              <span className="text-[10px] font-black text-[#C8A951]">الباقة الاحترافية ✓</span>
             </div>
-            <p className="text-[10px] text-gray-500 mt-1">جميع الميزات مفعّلة</p>
+            <p className="text-[10px] text-gray-500 mt-1">جميع الخدمات مفعّلة</p>
           </div>
         ) : (
           <div className="mx-3 mb-3 p-3 rounded-xl bg-gradient-to-l from-[#006C35]/8 to-[#C8A951]/8 border border-[#006C35]/10">
             <div className="flex items-center gap-2 mb-1">
               <Crown size={13} className="text-[#C8A951]" />
-              <span className="text-[10px] font-black text-[#C8A951]">الخطة المجانية</span>
+              <span className="text-[10px] font-black text-[#C8A951]">فعّل خدماتك</span>
             </div>
-            <p className="text-[10px] text-gray-500 leading-relaxed mb-2">ارقَ إلى الاحترافية لفتح كل الميزات</p>
+            <p className="text-[10px] text-gray-500 leading-relaxed mb-2">جهّز ملفك واطلب التقديم على ١٠٠+ شركة</p>
             <Link to="/#pricing" onClick={handleNavClick} className="flex items-center gap-1 text-[10px] font-black text-[#006C35] hover:underline">
               <Sparkles size={9} />
-              عرض الخطط
+              عرض الباقات
             </Link>
           </div>
         )

@@ -4,9 +4,9 @@ import { Menu, X, ChevronDown, Sparkles } from 'lucide-react';
 import Button from '../ui/Button';
 
 const navLinks = [
-  { label: 'المنصة', href: '#features' },
-  { label: 'كيف تعمل', href: '#how-it-works' },
-  { label: 'الأسعار', href: '#pricing' },
+  { label: 'الخدمات', href: '#features' },
+  { label: 'كيف نعمل', href: '#how-it-works' },
+  { label: 'الباقات', href: '#pricing' },
 ];
 
 export default function Navbar() {

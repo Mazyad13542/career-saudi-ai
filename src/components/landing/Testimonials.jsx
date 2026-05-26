@@ -14,10 +14,10 @@ const PLAN_AR = {
 };
 
 const STATS = [
-  { end: 4.2,  suffix: '/5', label: 'متوسط التقييم', sub: 'من آراء المستخدمين', decimals: 1 },
-  { end: 5860, suffix: '+',  label: 'مستخدم نشط',    sub: 'وينمو يومياً',       decimals: 0 },
-  { end: 1420, suffix: '+',  label: 'وظيفة منشورة',  sub: 'من شركات سعودية',    decimals: 0 },
-  { end: 1320, suffix: '+',  label: 'شركة موثوقة',   sub: 'على المنصة',         decimals: 0 },
+  { end: 4.8,  suffix: '/5', label: 'متوسط التقييم',    sub: 'من عملائنا',          decimals: 1 },
+  { end: 3200, suffix: '+',  label: 'ملف مهني جُهِّز',   sub: 'سيرة + موقع',         decimals: 0 },
+  { end: 150,  suffix: 'K+', label: 'تقديم على شركات',  sub: 'خلال ١٢ شهراً',        decimals: 0 },
+  { end: 94,   suffix: '%',  label: 'نسبة الرضا',       sub: 'يوصون بالخدمة',        decimals: 0 },
 ];
 
 function StatsBar() {
@@ -131,14 +131,14 @@ export default function Testimonials() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#006C35]/8 border border-[#006C35]/15 rounded-full mb-5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#006C35]" />
-            <span className="text-xs font-bold text-[#006C35]">قصص وتجارب</span>
+            <span className="text-xs font-bold text-[#006C35]">نتائج حقيقية من عملائنا</span>
           </div>
           <h2 className="arabic-heading text-3xl sm:text-4xl lg:text-5xl text-gray-900 mb-4">
-            ماذا يقول{' '}
-            <span className="text-gradient-green">المهنيون السعوديون</span>
+            ماذا حقّق{' '}
+            <span className="text-gradient-green">عملاؤنا في السعودية</span>
           </h2>
           <p className="text-gray-500 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-            تجارب متنوعة من باحثين عن عمل في مختلف القطاعات والمناطق في المملكة.
+            من جهّزنا له سيرته وموقعه وقدّمنا عنه — تجارب حقيقية من مختلف القطاعات والمناطق.
           </p>
         </motion.div>
 
@@ -182,11 +182,11 @@ export default function Testimonials() {
           transition={{ duration: 0.4, delay: 0.2 }}
         >
           {[
-            { icon: '🔒', text: 'بيانات محمية بالكامل' },
-            { icon: '🇸🇦', text: 'صُنع للمواهب السعودية' },
-            { icon: '✨', text: 'أدوات متقدمة للمهنيين' },
-            { icon: '⚡', text: 'منصة سحابية سريعة' },
-            { icon: '🏆', text: 'الأول في المملكة' },
+            { icon: '📝', text: 'سيرة ذاتية ATS احترافية' },
+            { icon: '🌐', text: 'موقع شخصي مخصص' },
+            { icon: '📤', text: 'تقديم على ١٠٠+ شركة' },
+            { icon: '💬', text: 'متابعة الردود والمقابلات' },
+            { icon: '🇸🇦', text: 'خدمة تنفيذية سعودية' },
           ].map((b) => (
             <div
               key={b.text}

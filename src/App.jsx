@@ -16,6 +16,7 @@ import Onboarding from './pages/Onboarding';
 
 // Candidate Dashboard
 import Overview from './pages/candidate/Overview';
+import Broadcast from './pages/candidate/Broadcast';
 import MyCV from './pages/candidate/MyCV';
 import ProfessionalProfile from './pages/candidate/ProfessionalProfile';
 import AIInterview from './pages/candidate/AIInterview';
@@ -70,6 +71,7 @@ export default function App() {
 
           {/* ── Candidate Dashboard (requires auth) ── */}
           <Route path="/dashboard"              element={<PrivateRoute><Overview /></PrivateRoute>} />
+          <Route path="/dashboard/broadcast"    element={<PrivateRoute><Broadcast /></PrivateRoute>} />
           <Route path="/dashboard/cv"           element={<PrivateRoute><MyCV /></PrivateRoute>} />
           <Route path="/dashboard/profile"      element={<PrivateRoute><ProfessionalProfile /></PrivateRoute>} />
           <Route path="/dashboard/interview"      element={<PrivateRoute><AIInterview /></PrivateRoute>} />
