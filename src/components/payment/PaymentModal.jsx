@@ -5,17 +5,19 @@ import { X, Lock, Shield, CheckCircle, AlertCircle, Crown } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { track, EVENTS } from '../../lib/analytics';
 
-const USD_AMOUNT   = '26.40';
+const USD_AMOUNT   = '2.40';
 const SDK_CURRENCY = 'USD';
-const PLAN_LABEL   = 'الخطة الاحترافية';
+const PLAN_LABEL   = 'الاشتراك الكامل';
 const SUCCESS_PATH = '/payment-success';
 const CANCEL_PATH  = '/#pricing';
 
 const PLAN_PERKS = [
-  'تقديم مباشر على الوظائف',
-  'متابعة كاملة للتقديمات',
-  'جلسات مقابلة غير محدودة',
-  'تحليل متقدم للسيرة الذاتية',
+  'سيرة ذاتية ATS احترافية',
+  'موقع شخصي احترافي',
+  'التقديم على ١٠٠+ شركة',
+  'خدمة البث Broadcast',
+  'متابعة الردود والمقابلات',
+  'لوحة تحكم + دعم مباشر',
 ];
 
 // ── Inner checkout ────────────────────────────────────────────────────────────
@@ -173,13 +175,13 @@ export default function PaymentModal({ isOpen, onClose }) {
           <div className="bg-white/8 border border-white/10 rounded-2xl px-4 py-3 flex items-center justify-between">
             <div className="text-right">
               <div className="flex items-baseline gap-1.5">
-                <span className="text-3xl font-black text-white stat-number">٩٩</span>
+                <span className="text-3xl font-black text-white stat-number">٩</span>
                 <span className="text-green-200 font-bold">ريال</span>
                 <span className="text-green-300/70 text-sm">/ شهر</span>
               </div>
               <p className="text-[10px] text-green-300/60 mt-0.5">إلغاء في أي وقت · لا رسوم خفية</p>
             </div>
-            <span className="text-xs font-black text-[#C8A951] px-3 py-1 bg-[#C8A951]/20 border border-[#C8A951]/30 rounded-full">وفّر ٦٧٪</span>
+            <span className="text-xs font-black text-[#C8A951] px-3 py-1 bg-[#C8A951]/20 border border-[#C8A951]/30 rounded-full">وفّر ٩١٪</span>
           </div>
         </div>
 
