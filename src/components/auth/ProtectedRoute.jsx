@@ -20,8 +20,20 @@ export default function ProtectedRoute({ children, requirePremium = false, requi
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
+  // Redirect new users (candidates without onboarding) to onboarding
+  const isOnboardingPath = location.pathname === '/onboarding';
+  if (
+    profile &&
+    profile.role === 'candidate' &&
+    !profile.onboarding_done &&
+    !isOnboardingPath &&
+    !requireRole
+  ) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
   if (requirePremium && !isPremium()) {
-    return <Navigate to="/pricing" replace />;
+    return <Navigate to="/#pricing" replace />;
   }
 
   if (requireRole) {

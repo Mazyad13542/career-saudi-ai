@@ -36,12 +36,12 @@ CREATE POLICY IF NOT EXISTS "admin_jobs_all_statuses" ON public.jobs FOR SELECT 
 
 -- 5. HR can see their own pending/rejected jobs too
 DROP POLICY IF EXISTS "hr_own_jobs_select" ON public.jobs;
-CREATE POLICY "hr_own_jobs_select" ON public.jobs FOR SELECT USING (
+CREATE POLICY IF NOT EXISTS "hr_own_jobs_select" ON public.jobs FOR SELECT USING (
   auth.uid() = created_by
 );
 
 -- 6. Update public jobs select to only show approved
 DROP POLICY IF EXISTS "jobs_select" ON public.jobs;
-CREATE POLICY "jobs_select" ON public.jobs FOR SELECT USING (
+CREATE POLICY IF NOT EXISTS "jobs_select" ON public.jobs FOR SELECT USING (
   is_active = true AND status = 'approved'
 );

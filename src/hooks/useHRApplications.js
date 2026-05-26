@@ -8,7 +8,7 @@ export function useHRApplications() {
   const [loading, setLoading]           = useState(true);
   const [error, setError]               = useState(null);
 
-  const fetch = useCallback(async () => {
+  const refetchHRApps = useCallback(async () => {
     if (!user) return;
     setLoading(true);
     setError(null);
@@ -39,7 +39,7 @@ export function useHRApplications() {
     const userIds = [...new Set(apps.map((a) => a.user_id))];
     const { data: profiles } = await supabase
       .from('profiles')
-      .select('id, full_name, email, job_title, city, avatar_url, english_level, career_score, profile_data')
+      .select('id, full_name, email, job_title, city, avatar_url, english_level, career_score, ats_score, skills, experience_years, profile_strength')
       .in('id', userIds);
 
     const profileMap = Object.fromEntries((profiles ?? []).map((p) => [p.id, p]));
@@ -54,7 +54,7 @@ export function useHRApplications() {
     setLoading(false);
   }, [user]);
 
-  useEffect(() => { fetch(); }, [fetch]);
+  useEffect(() => { refetchHRApps(); }, [refetchHRApps]);
 
   async function updateStatus(appId, status, notes) {
     const update = { status, updated_at: new Date().toISOString() };
@@ -81,5 +81,5 @@ export function useHRApplications() {
     rejected:  applications.filter((a) => a.status === 'Rejected').length,
   };
 
-  return { applications, loading, error, stats, updateStatus, refetch: fetch };
+  return { applications, loading, error, stats, updateStatus, refetch: refetchHRApps };
 }

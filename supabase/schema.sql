@@ -168,8 +168,8 @@ CREATE POLICY "cvs_insert" ON public.cvs FOR INSERT WITH CHECK (auth.uid() = use
 CREATE POLICY "cvs_update" ON public.cvs FOR UPDATE USING (auth.uid() = user_id);
 CREATE POLICY "cvs_delete" ON public.cvs FOR DELETE USING (auth.uid() = user_id);
 
--- jobs — public read, no anonymous write
-CREATE POLICY "jobs_select" ON public.jobs FOR SELECT USING (is_active = true);
+-- jobs — public read (active + approved only), no anonymous write
+CREATE POLICY "jobs_select" ON public.jobs FOR SELECT USING (is_active = true AND status = 'approved');
 
 -- saved_jobs
 CREATE POLICY "saved_jobs_select" ON public.saved_jobs FOR SELECT USING (auth.uid() = user_id);

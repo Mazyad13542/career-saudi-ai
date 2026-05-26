@@ -21,13 +21,15 @@ export function useAdmin() {
       { count: totalUsers },
       { count: totalJobs },
       { count: activeJobs },
+      { count: pendingJobs },
       { count: totalApps },
       { count: totalPayments },
       { data: recentPayments },
     ] = await Promise.all([
       supabase.from('profiles').select('*', { count: 'exact', head: true }),
       supabase.from('jobs').select('*', { count: 'exact', head: true }),
-      supabase.from('jobs').select('*', { count: 'exact', head: true }).eq('is_active', true),
+      supabase.from('jobs').select('*', { count: 'exact', head: true }).eq('is_active', true).eq('status', 'approved'),
+      supabase.from('jobs').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
       supabase.from('applications').select('*', { count: 'exact', head: true }),
       supabase.from('payments').select('*', { count: 'exact', head: true }).eq('status', 'completed'),
       supabase.from('payments').select('amount_sar').eq('status', 'completed'),
@@ -35,7 +37,7 @@ export function useAdmin() {
 
     const revenue = (recentPayments ?? []).reduce((s, p) => s + Number(p.amount_sar ?? 0), 0);
 
-    setStats({ totalUsers, totalJobs, activeJobs, totalApps, totalPayments, revenue });
+    setStats({ totalUsers, totalJobs, activeJobs, pendingJobs, totalApps, totalPayments, revenue });
     setLoading(false);
   }, [isAdmin]);
 

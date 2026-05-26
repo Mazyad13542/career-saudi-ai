@@ -3,7 +3,7 @@ import {
   LayoutDashboard, FileText, Mic, Briefcase, Star,
   ClipboardList, MessageSquare, Globe, Settings, LogOut,
   ChevronRight, ChevronLeft, Crown, UserCircle, Sparkles,
-  Users, BarChart2, BookmarkCheck, Shield,
+  Users, BarChart2, BookmarkCheck, Shield, BookOpen, TrendingUp, CreditCard,
 } from 'lucide-react';
 import { cn } from '../../utils/helpers';
 import { useAuth } from '../../context/AuthContext';
@@ -12,12 +12,15 @@ const CANDIDATE_NAV = [
   { icon: LayoutDashboard, label: 'نظرة عامة',           href: '/dashboard' },
   { icon: FileText,        label: 'سيرتي الذاتية',       href: '/dashboard/cv' },
   { icon: UserCircle,      label: 'ملفي المهني',          href: '/dashboard/profile' },
+  { icon: TrendingUp,      label: 'مستشار المسيرة',      href: '/dashboard/career-coach' },
   { icon: Mic,             label: 'المقابلة التجريبية',   href: '/dashboard/interview' },
+  { icon: BookOpen,        label: 'تدريب الإنجليزية',    href: '/dashboard/english' },
   { icon: Briefcase,       label: 'الوظائف الحديثة',     href: '/dashboard/jobs' },
   { icon: Star,            label: 'الوظائف المناسبة لي', href: '/dashboard/jobs-for-you' },
   { icon: ClipboardList,   label: 'متابعة التقديمات',    href: '/dashboard/applications' },
   { icon: MessageSquare,   label: 'ردود الشركات',        href: '/dashboard/replies' },
   { icon: Globe,           label: 'موقعي الشخصي',        href: '/dashboard/portfolio' },
+  { icon: CreditCard,      label: 'اشتراكي',              href: '/dashboard/subscription' },
   { icon: Settings,        label: 'الإعدادات',            href: '/dashboard/settings' },
 ];
 

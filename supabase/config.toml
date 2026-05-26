@@ -1,0 +1,72 @@
+# ============================================================
+#  قِمّة — Supabase Project Configuration
+#  Used by Supabase CLI: supabase start / supabase functions deploy
+# ============================================================
+
+[project]
+# Your Supabase project reference ID (from dashboard URL)
+# https://supabase.com/dashboard/project/eerduxtweznidslizpgb
+project_id = "eerduxtweznidslizpgb"
+
+[api]
+enabled = true
+port     = 54321
+schemas  = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port         = 54322
+shadow_port  = 54320
+major_version = 15
+
+[studio]
+enabled = true
+port    = 54323
+
+[inbucket]
+enabled = true
+port    = 54324
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+
+[auth]
+enabled         = true
+site_url        = "https://qimma.sa"
+additional_redirect_urls = [
+  "https://qimma.sa/dashboard",
+  "https://qimma.sa/onboarding",
+  "http://localhost:5173/dashboard",
+]
+jwt_expiry    = 3600
+refresh_token_rotation_enabled = true
+security_captcha_enabled       = false
+
+[auth.email]
+enable_signup         = true
+double_confirm_changes = true
+enable_confirmations  = false   # set true in production for email verification
+
+[auth.sms]
+enable_signup        = false
+enable_confirmations = false
+
+[auth.external.google]
+enabled     = true
+# client_id and secret are set in Supabase Dashboard → Auth → Providers → Google
+# Redirect URI to register in Google Console:
+#   https://eerduxtweznidslizpgb.supabase.co/auth/v1/callback
+
+[functions.jobs-aggregator]
+verify_jwt = false   # called by pg_cron with service role, no user JWT
+
+[functions.send-notification]
+verify_jwt = false   # called server-side with service role key
+
+[functions.match-jobs]
+verify_jwt = false   # called after profile update, service role key
+
+[analytics]
+enabled = false

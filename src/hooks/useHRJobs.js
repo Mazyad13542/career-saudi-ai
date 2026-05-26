@@ -8,7 +8,7 @@ export function useHRJobs() {
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(null);
 
-  const fetch = useCallback(async () => {
+  const refetchHRJobs = useCallback(async () => {
     if (!user) return;
     setLoading(true);
     setError(null);
@@ -22,7 +22,7 @@ export function useHRJobs() {
     setLoading(false);
   }, [user]);
 
-  useEffect(() => { fetch(); }, [fetch]);
+  useEffect(() => { refetchHRJobs(); }, [refetchHRJobs]);
 
   async function createJob(fields) {
     const { data, error: err } = await supabase
@@ -70,5 +70,5 @@ export function useHRJobs() {
     totalApps:    jobs.reduce((s, j) => s + (j.applications_count ?? 0), 0),
   };
 
-  return { jobs, loading, error, stats, createJob, updateJob, deleteJob, toggleActive, refetch: fetch };
+  return { jobs, loading, error, stats, createJob, updateJob, deleteJob, toggleActive, refetch: refetchHRJobs };
 }

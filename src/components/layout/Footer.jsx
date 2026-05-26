@@ -3,24 +3,20 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 
 const footerLinks = {
   'المنصة': [
-    { label: 'بناء السيرة الذاتية', href: '#' },
-    { label: 'المقابلة التجريبية', href: '#' },
-    { label: 'مطابقة الوظائف', href: '#' },
-    { label: 'الموقع الشخصي', href: '#' },
-    { label: 'لوحة المسيرة المهنية', href: '#' },
+    { label: 'بناء السيرة الذاتية',  href: '/dashboard/cv' },
+    { label: 'المقابلة التجريبية',    href: '/dashboard/interview' },
+    { label: 'تدريب الإنجليزية',      href: '/dashboard/english' },
+    { label: 'مطابقة الوظائف',        href: '/dashboard/jobs-for-you' },
+    { label: 'لوحة المسيرة المهنية',  href: '/dashboard/career-coach' },
   ],
   'الشركة': [
-    { label: 'من نحن', href: '#' },
-    { label: 'الوظائف لدينا', href: '#' },
-    { label: 'المدونة', href: '#' },
-    { label: 'الشركاء', href: '#' },
-    { label: 'تواصل معنا', href: '#' },
+    { label: 'الصفحة الرئيسية', href: '/' },
+    { label: 'الأسعار',          href: '/#pricing' },
+    { label: 'تواصل معنا',       href: 'mailto:hello@qimma.sa' },
   ],
   'قانوني': [
-    { label: 'سياسة الخصوصية', href: '#' },
-    { label: 'شروط الاستخدام', href: '#' },
-    { label: 'حماية البيانات', href: '#' },
-    { label: 'ملفات تعريف الارتباط', href: '#' },
+    { label: 'سياسة الخصوصية', href: '/privacy' },
+    { label: 'شروط الاستخدام', href: '/terms' },
   ],
 };
 

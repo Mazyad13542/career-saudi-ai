@@ -9,7 +9,7 @@ const USD_AMOUNT   = '26.40';
 const SDK_CURRENCY = 'USD';
 const PLAN_LABEL   = 'الخطة الاحترافية';
 const SUCCESS_PATH = '/payment-success';
-const CANCEL_PATH  = '/pricing';
+const CANCEL_PATH  = '/#pricing';
 
 const PLAN_PERKS = [
   'تقديم مباشر على الوظائف',

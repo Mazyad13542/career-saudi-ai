@@ -31,9 +31,10 @@ const TODAY_OPPS = [
 ];
 
 const NEXT_STEPS = [
-  { icon: '🎯', title: 'خصّص سيرتك لوظيفة محددة', cta: 'اذهب للسيرة',   href: '/dashboard/cv',        premium: true },
-  { icon: '💬', title: 'أجرِ مقابلة تجريبية جديدة', cta: 'ابدأ المقابلة', href: '/dashboard/interview', premium: false },
-  { icon: '🔍', title: 'استعرض أحدث الوظائف اليوم', cta: 'عرض الوظائف',  href: '/dashboard/jobs',      premium: false },
+  { icon: '🎯', title: 'خصّص سيرتك لوظيفة محددة',   cta: 'اذهب للسيرة',   href: '/dashboard/cv',           premium: true },
+  { icon: '💬', title: 'أجرِ مقابلة تجريبية جديدة',  cta: 'ابدأ المقابلة', href: '/dashboard/interview',    premium: false },
+  { icon: '📈', title: 'اكتشف مسارك المهني المثالي', cta: 'افتح المستشار', href: '/dashboard/career-coach', premium: false },
+  { icon: '🔍', title: 'استعرض أحدث الوظائف اليوم', cta: 'عرض الوظائف',  href: '/dashboard/jobs',          premium: false },
 ];
 
 export default function Overview() {
@@ -148,7 +149,7 @@ export default function Overview() {
           { label: 'الوظائف المناسبة لك', value: '٣٨',            sub: 'بناءً على ملفك',   color: 'text-[#006C35]', bg: 'bg-[#006C35]/8', icon: '🎯', href: '/dashboard/jobs-for-you' },
           { label: 'الطلبات المُرسلة',    value: stats.total || '٠', sub: 'إجمالي الطلبات',   color: 'text-blue-600',  bg: 'bg-blue-50',     icon: '📋', href: '/dashboard/applications' },
           { label: 'ردود الشركات',        value: stats.interview || '٠', sub: 'مقابلات ورود',  color: 'text-amber-600', bg: 'bg-amber-50',    icon: '💬', href: '/dashboard/replies' },
-          { label: 'مستوى اللغة',        value: profile?.english_level || 'B1', sub: 'إنجليزي', color: 'text-purple-600', bg: 'bg-purple-50', icon: '🌐', href: '/dashboard/interview' },
+          { label: 'مستوى اللغة',        value: profile?.english_level || 'B1', sub: 'إنجليزي', color: 'text-purple-600', bg: 'bg-purple-50', icon: '🌐', href: '/dashboard/english' },
         ].map((stat) => (
           <Link key={stat.label} to={stat.href} className="bg-white rounded-2xl border border-gray-100 p-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 text-right block group">
             <div className={`w-9 h-9 rounded-xl ${stat.bg} flex items-center justify-center mb-3 mr-auto group-hover:scale-110 transition-transform`}>

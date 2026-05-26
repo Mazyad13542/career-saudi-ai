@@ -1,19 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
-import { row1, row2 } from '../../data/testimonials';
+import { testimonials } from '../../data/testimonials';
 
-// ── Keyframe CSS ──────────────────────────────────────────────────────────────
-const MARQUEE_CSS = `
-  @keyframes marquee-left {
-    0%   { transform: translate3d(0, 0, 0); }
-    100% { transform: translate3d(-50%, 0, 0); }
-  }
-  @keyframes marquee-right {
-    0%   { transform: translate3d(-50%, 0, 0); }
-    100% { transform: translate3d(0, 0, 0); }
-  }
-`;
+const HIDDEN_SCROLL_CSS = `.testimonials-snap::-webkit-scrollbar { display: none; }`;
+
+const FEATURED = testimonials.slice(0, 12);
 
 const PLAN_AR = {
   Free:         'مجاني',
@@ -22,17 +14,16 @@ const PLAN_AR = {
 };
 
 const STATS = [
-  { end: 4.2,   suffix: '/5', label: 'متوسط التقييم',  sub: 'من آراء المستخدمين', decimals: 1 },
-  { end: 5860,  suffix: '+',  label: 'مستخدم نشط',     sub: 'وينمو يومياً',        decimals: 0 },
-  { end: 1420,  suffix: '+',  label: 'وظيفة منشورة',   sub: 'من شركات سعودية',     decimals: 0 },
-  { end: 1320,  suffix: '+',  label: 'شركة موثوقة',    sub: 'على المنصة',          decimals: 0 },
+  { end: 4.2,  suffix: '/5', label: 'متوسط التقييم', sub: 'من آراء المستخدمين', decimals: 1 },
+  { end: 5860, suffix: '+',  label: 'مستخدم نشط',    sub: 'وينمو يومياً',       decimals: 0 },
+  { end: 1420, suffix: '+',  label: 'وظيفة منشورة',  sub: 'من شركات سعودية',    decimals: 0 },
+  { end: 1320, suffix: '+',  label: 'شركة موثوقة',   sub: 'على المنصة',         decimals: 0 },
 ];
 
-// ── Count-up stats bar ────────────────────────────────────────────────────────
 function StatsBar() {
-  const [vals, setVals] = useState(STATS.map(() => 0));
-  const containerRef   = useRef(null);
-  const triggered      = useRef(false);
+  const [vals, setVals]   = useState(STATS.map(() => 0));
+  const containerRef      = useRef(null);
+  const triggered         = useRef(false);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -83,21 +74,14 @@ function StatsBar() {
   );
 }
 
-// ── Single card ───────────────────────────────────────────────────────────────
 function TestimonialCard({ name, role, company, avatar, rating, comment, plan }) {
   return (
     <div
-      className="w-[340px] flex-shrink-0 bg-white rounded-2xl border border-gray-100 shadow-[0_2px_14px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.13)] hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 p-6 flex flex-col gap-3 cursor-default"
+      className="h-full bg-white rounded-2xl border border-gray-100 shadow-[0_2px_14px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.13)] hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 p-6 flex flex-col gap-3 cursor-default"
       dir="rtl"
     >
-      {/* Quote decoration */}
-      <Quote
-        size={22}
-        className="text-[#006C35]/10 self-start"
-        style={{ transform: 'scaleX(-1)' }}
-      />
+      <Quote size={22} className="text-[#006C35]/10 self-start" style={{ transform: 'scaleX(-1)' }} />
 
-      {/* Stars */}
       <div className="flex gap-0.5 -mt-1">
         {Array.from({ length: 5 }).map((_, i) => (
           <Star
@@ -108,19 +92,10 @@ function TestimonialCard({ name, role, company, avatar, rating, comment, plan })
         ))}
       </div>
 
-      {/* Comment */}
-      <p className="text-gray-700 text-sm leading-relaxed flex-1">
-        "{comment}"
-      </p>
+      <p className="text-gray-700 text-sm leading-relaxed flex-1">"{comment}"</p>
 
-      {/* Author row */}
       <div className="flex items-center gap-2.5 pt-3 border-t border-gray-50">
-        <img
-          src={avatar}
-          alt={name}
-          className="w-9 h-9 rounded-full flex-shrink-0"
-          loading="lazy"
-        />
+        <img src={avatar} alt={name} className="w-9 h-9 rounded-full flex-shrink-0" loading="lazy" />
         <div className="flex-1 min-w-0">
           <p className="font-bold text-gray-900 text-sm truncate">{name}</p>
           <p className="text-xs text-gray-400 truncate">{role} · {company}</p>
@@ -135,51 +110,18 @@ function TestimonialCard({ name, role, company, avatar, rating, comment, plan })
   );
 }
 
-// ── Marquee row ───────────────────────────────────────────────────────────────
-function MarqueeRow({ items, direction = 'left', duration = 70 }) {
-  const doubled = [...items, ...items];
-  return (
-    <div className="overflow-hidden py-3">
-      <div
-        style={{
-          display:            'flex',
-          gap:                '20px',
-          width:              'max-content',
-          animation:          `marquee-${direction} ${duration}s linear infinite`,
-          direction:          'ltr',
-          willChange:         'transform',
-          backfaceVisibility: 'hidden',
-          transform:          'translate3d(0, 0, 0)',
-        }}
-      >
-        {doubled.map((t, i) => (
-          <TestimonialCard key={`${t.id}-${i}`} {...t} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ── Section ───────────────────────────────────────────────────────────────────
 export default function Testimonials() {
   return (
-    <section
-      className="py-24 bg-gray-50 relative overflow-hidden"
-      id="testimonials"
-      dir="rtl"
-    >
-      <style>{MARQUEE_CSS}</style>
+    <section className="py-24 bg-gray-50 relative overflow-hidden" id="testimonials" dir="rtl">
+      <style>{HIDDEN_SCROLL_CSS}</style>
 
-      {/* Background pattern */}
       <div className="absolute inset-0 saudi-geo-pattern opacity-15 pointer-events-none" />
-
-      {/* Soft blobs */}
       <div className="absolute top-0 right-1/3 w-[400px] h-[400px] bg-[#006C35]/4 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-1/3 w-[300px] h-[300px] bg-[#C8A951]/4 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative">
 
-        {/* ── Header ── */}
+        {/* Header */}
         <motion.div
           className="text-center mb-12 px-4"
           initial={{ opacity: 0, y: 28 }}
@@ -191,7 +133,6 @@ export default function Testimonials() {
             <span className="w-1.5 h-1.5 rounded-full bg-[#006C35]" />
             <span className="text-xs font-bold text-[#006C35]">قصص وتجارب</span>
           </div>
-
           <h2 className="arabic-heading text-3xl sm:text-4xl lg:text-5xl text-gray-900 mb-4">
             ماذا يقول{' '}
             <span className="text-gradient-green">المهنيون السعوديون</span>
@@ -201,33 +142,38 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        {/* ── Marquee area ── */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="relative"
         >
-          {/* Right fade edge */}
+          {/* Mobile: manual horizontal snap scroll — no auto animation */}
           <div
-            className="absolute inset-y-0 right-0 w-36 sm:w-64 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to left, rgb(249,250,251) 20%, transparent)' }}
-          />
-          {/* Left fade edge */}
-          <div
-            className="absolute inset-y-0 left-0 w-36 sm:w-64 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to right, rgb(249,250,251) 20%, transparent)' }}
-          />
+            className="lg:hidden overflow-x-auto testimonials-snap pb-3"
+            style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+          >
+            <div className="flex gap-4 px-4 snap-x snap-mandatory" style={{ width: 'max-content' }}>
+              {FEATURED.map((t) => (
+                <div key={t.id} className="w-[288px] flex-shrink-0 snap-start">
+                  <TestimonialCard {...t} />
+                </div>
+              ))}
+            </div>
+          </div>
 
-          <MarqueeRow items={row1} direction="left"  duration={70} />
-          <MarqueeRow items={row2} direction="right" duration={85} />
+          {/* Desktop: static 3-column grid */}
+          <div className="hidden lg:grid grid-cols-3 gap-5 max-w-6xl mx-auto px-8">
+            {FEATURED.map((t) => (
+              <TestimonialCard key={t.id} {...t} />
+            ))}
+          </div>
         </motion.div>
 
-        {/* ── Stats bar — count-up on scroll ── */}
+        {/* Stats bar — count-up on scroll */}
         <StatsBar />
 
-        {/* ── Trust badges ── */}
+        {/* Trust badges */}
         <motion.div
           className="mt-8 flex flex-wrap justify-center gap-3 px-4"
           initial={{ opacity: 0 }}

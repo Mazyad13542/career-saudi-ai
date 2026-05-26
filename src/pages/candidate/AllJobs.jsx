@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
 import {
   Search, MapPin, Briefcase, Calendar, BookmarkCheck, Bookmark,
   SlidersHorizontal, Loader2, ExternalLink, ChevronDown,
@@ -53,7 +53,7 @@ function JobCard({ job, isSaved, isApplied, onSave, onApply }) {
   const handleApply = () => {
     if (job.source_url) {
       window.open(job.source_url, '_blank', 'noopener,noreferrer');
-      onApply(job); // log the click
+      onApply(job);
     } else {
       onApply(job);
     }
@@ -141,15 +141,28 @@ export default function AllJobs() {
   const [expLevel,     setExpLevel]     = useState('كل المستويات');
   const [isRemote,     setIsRemote]     = useState(false);
   const [freshGrad,    setFreshGrad]    = useState(false);
+  const [isFeatured,   setIsFeatured]   = useState(false);
+  const [viewSaved,    setViewSaved]    = useState(false);
   const [showFilters,  setShowFilters]  = useState(false);
   const [applied,      setApplied]      = useState({});
   const timerRef = useRef(null);
+
+  // savedIds must be resolved BEFORE useJobs so we can pass savedIds array as filter
+  const { savedIds, toggle: toggleSave } = useSavedJobs();
+  const { addApplication }               = useApplications();
 
   const handleSearchChange = useCallback((val) => {
     setSearch(val);
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => setDebouncedQ(val), 420);
   }, []);
+
+  // Stable array for savedIds filter (useMemo keeps reference stable)
+  const savedIdsArray = useMemo(
+    () => viewSaved ? Array.from(savedIds) : undefined,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [viewSaved, savedIds]
+  );
 
   const activeFilters = {
     search:          debouncedQ  || undefined,
@@ -160,19 +173,20 @@ export default function AllJobs() {
     experienceLevel: expLevel    !== 'كل المستويات'  ? expLevel    : undefined,
     isRemote:        isRemote    || undefined,
     freshGraduate:   freshGrad   || undefined,
+    featured:        isFeatured  || undefined,
+    savedIds:        savedIdsArray,
   };
 
   const { jobs, loading, hasMore, loadMore } = useJobs(activeFilters);
-  const { savedIds, toggle: toggleSave }     = useSavedJobs();
-  const { addApplication }                   = useApplications();
 
-  const hasActiveFilters = !!(debouncedQ || city !== 'كل المدن' || region !== 'كل المناطق' || sector !== 'كل القطاعات' || jobType !== 'كل الأنواع' || expLevel !== 'كل المستويات' || isRemote || freshGrad);
+  const hasActiveFilters = !!(debouncedQ || city !== 'كل المدن' || region !== 'كل المناطق' || sector !== 'كل القطاعات' || jobType !== 'كل الأنواع' || expLevel !== 'كل المستويات' || isRemote || freshGrad || isFeatured || viewSaved);
 
   function reset() {
     setSearch(''); setDebouncedQ('');
     setCity('كل المدن'); setRegion('كل المناطق');
     setSector('كل القطاعات'); setJobType('كل الأنواع');
     setExpLevel('كل المستويات'); setIsRemote(false); setFreshGrad(false);
+    setIsFeatured(false); setViewSaved(false);
   }
 
   const handleApply = async (job) => {
@@ -186,6 +200,13 @@ export default function AllJobs() {
     toggleSave(jobId);
     track(EVENTS.JOB_SAVED, { jobId });
   };
+
+  // Empty state reason
+  const emptyReason = viewSaved && savedIds.size === 0
+    ? 'لم تحفظ أي وظيفة بعد — انقر على أيقونة الحفظ في أي وظيفة'
+    : hasActiveFilters
+    ? 'جرّب تعديل خيارات البحث'
+    : 'لم تُضَف وظائف بعد — استخدم أدوات الإدارة لإضافة وظائف';
 
   return (
     <DashboardLayout>
@@ -253,19 +274,21 @@ export default function AllJobs() {
       {/* Quick filter chips */}
       <div className="flex gap-2 mb-4 overflow-x-auto pb-1 flex-row-reverse">
         {[
-          { label: '⭐ مميزة',            active: false, onClick: () => {} },
-          { label: '🏠 عن بُعد',          active: isRemote,  onClick: () => setIsRemote(!isRemote) },
-          { label: '🌱 لحديثي التخرج',   active: freshGrad, onClick: () => setFreshGrad(!freshGrad) },
-          { label: '🖥 تقنية',             active: sector === 'تقنية المعلومات', onClick: () => setSector(sector === 'تقنية المعلومات' ? 'كل القطاعات' : 'تقنية المعلومات') },
-          { label: '🏥 صحة',              active: sector === 'الرعاية الصحية',  onClick: () => setSector(sector === 'الرعاية الصحية' ? 'كل القطاعات' : 'الرعاية الصحية') },
-          { label: '🏦 مصارف',            active: sector === 'المصارف والتمويل', onClick: () => setSector(sector === 'المصارف والتمويل' ? 'كل القطاعات' : 'المصارف والتمويل') },
-        ].map(({ label, active, onClick }) => (
+          { label: '🔖 محفوظة',             active: viewSaved,  onClick: () => setViewSaved(!viewSaved),    badge: savedIds.size > 0 ? String(savedIds.size) : null },
+          { label: '⭐ مميزة',              active: isFeatured, onClick: () => setIsFeatured(!isFeatured) },
+          { label: '🏠 عن بُعد',            active: isRemote,   onClick: () => setIsRemote(!isRemote) },
+          { label: '🌱 لحديثي التخرج',     active: freshGrad,  onClick: () => setFreshGrad(!freshGrad) },
+          { label: '🖥 تقنية',              active: sector === 'تقنية المعلومات', onClick: () => setSector(sector === 'تقنية المعلومات' ? 'كل القطاعات' : 'تقنية المعلومات') },
+          { label: '🏥 صحة',               active: sector === 'الرعاية الصحية',  onClick: () => setSector(sector === 'الرعاية الصحية' ? 'كل القطاعات' : 'الرعاية الصحية') },
+          { label: '🏦 مصارف',             active: sector === 'المصارف والتمويل', onClick: () => setSector(sector === 'المصارف والتمويل' ? 'كل القطاعات' : 'المصارف والتمويل') },
+        ].map(({ label, active, onClick, badge }) => (
           <button
             key={label}
             onClick={onClick}
-            className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${active ? 'bg-[#006C35] text-white border-[#006C35]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#006C35]/30'}`}
+            className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold border transition-all ${active ? 'bg-[#006C35] text-white border-[#006C35]' : 'bg-white text-gray-600 border-gray-200 hover:border-[#006C35]/30'}`}
           >
             {label}
+            {badge && <span className={`w-4 h-4 rounded-full text-[9px] flex items-center justify-center ${active ? 'bg-white text-[#006C35]' : 'bg-[#006C35] text-white'}`}>{badge}</span>}
           </button>
         ))}
       </div>
@@ -289,11 +312,14 @@ export default function AllJobs() {
         </div>
       ) : jobs.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-2xl border border-gray-100">
-          <Briefcase size={40} className="text-gray-200 mx-auto mb-3" />
-          <p className="text-gray-500 font-black">لا توجد وظائف مطابقة</p>
-          <p className="text-xs text-gray-400 mt-1 mb-4">
-            {hasActiveFilters ? 'جرّب تعديل خيارات البحث' : 'لم تُضَف وظائف بعد — استخدم أدوات الإدارة لإضافة وظائف'}
+          {viewSaved && savedIds.size === 0
+            ? <BookmarkCheck size={40} className="text-gray-200 mx-auto mb-3" />
+            : <Briefcase size={40} className="text-gray-200 mx-auto mb-3" />
+          }
+          <p className="text-gray-500 font-black">
+            {viewSaved && savedIds.size === 0 ? 'لا توجد وظائف محفوظة' : 'لا توجد وظائف مطابقة'}
           </p>
+          <p className="text-xs text-gray-400 mt-1 mb-4">{emptyReason}</p>
           {hasActiveFilters && (
             <button onClick={reset} className="text-xs text-[#006C35] font-black hover:underline">إعادة تعيين الفلاتر</button>
           )}

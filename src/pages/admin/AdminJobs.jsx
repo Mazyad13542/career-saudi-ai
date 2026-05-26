@@ -25,6 +25,7 @@ const EMPTY_FORM = {
   salary_min: '', salary_max: '',
   source: 'manual', source_url: '',
   is_remote: false, fresh_graduate: false, is_featured: false,
+  is_active: true,
   status: 'approved',
 };
 

@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
-import { Bell, Search, ChevronDown, Crown, LogOut, Settings, User, Menu } from 'lucide-react';
+import { Search, ChevronDown, Crown, LogOut, Settings, User, Menu } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import DashboardSidebar from './DashboardSidebar';
+import NotificationBell from '../ui/NotificationBell';
 import { useAuth } from '../../context/AuthContext';
 
 export default function DashboardLayout({ children, type = 'candidate' }) {
@@ -98,10 +99,8 @@ export default function DashboardLayout({ children, type = 'candidate' }) {
               {planLabel}
             </span>
 
-            {/* Notification */}
-            <button className="relative w-9 h-9 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center hover:bg-gray-100 transition-colors">
-              <Bell size={16} className="text-gray-500" />
-            </button>
+            {/* Notification Bell — real-time */}
+            <NotificationBell />
 
             {/* User menu */}
             <div className="relative" ref={menuRef}>

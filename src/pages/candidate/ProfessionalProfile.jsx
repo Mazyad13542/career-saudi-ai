@@ -85,10 +85,19 @@ export default function ProfessionalProfile() {
   const handleSave = async () => {
     setSaving(true);
     const { error } = await updateProfile({
-      full_name:  profile.nameAr || authProfile?.full_name,
-      job_title:  profile.specialty,
-      city:       profile.city,
-      bio:        profile.bio,
+      full_name:       profile.nameAr || authProfile?.full_name,
+      job_title:       profile.specialty,
+      city:            profile.city,
+      bio:             profile.bio,
+      skills:          profile.skills,          // top-level column for AI matching
+      education_level: profile.university ? 'بكالوريوس' : undefined,
+      experience_years: profile.experience?.length > 0
+        ? Math.max(...profile.experience.map(e => {
+            const from = parseInt(e.from) || 2020;
+            const to   = e.current ? new Date().getFullYear() : (parseInt(e.to) || 2023);
+            return to - from;
+          }).filter(y => y >= 0), 0)
+        : undefined,
       profile_data: {
         nameAr:         profile.nameAr,
         nameEn:         profile.nameEn,

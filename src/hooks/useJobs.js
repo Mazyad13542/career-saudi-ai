@@ -11,7 +11,13 @@ export function useJobs(filters = {}) {
   const [hasMore,  setHasMore]  = useState(false);
   const [page,     setPage]     = useState(0);
 
+  // Stable key for savedIds array to avoid re-render loops
+  const savedIdsKey = filters.savedIds ? JSON.stringify([...(filters.savedIds)].sort()) : null;
+
   const buildQuery = useCallback((offset = 0) => {
+    // Empty savedIds array → caller wants only saved jobs but has none → return null = no results
+    if (filters.savedIds !== undefined && filters.savedIds.length === 0) return null;
+
     let q = supabase
       .from('jobs')
       .select('*')
@@ -34,12 +40,14 @@ export function useJobs(filters = {}) {
     if (filters.featured)                                      q = q.eq('is_featured',      true);
     if (filters.isRemote)                                      q = q.eq('is_remote',        true);
     if (filters.freshGraduate)                                 q = q.eq('fresh_graduate',   true);
+    if (filters.savedIds?.length)                              q = q.in('id',               filters.savedIds);
 
     return q;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     filters.search, filters.city, filters.region, filters.sector,
     filters.jobType, filters.experienceLevel, filters.featured,
-    filters.isRemote, filters.freshGraduate,
+    filters.isRemote, filters.freshGraduate, savedIdsKey,
   ]);
 
   const fetchJobs = useCallback(async (reset = true) => {
@@ -47,7 +55,10 @@ export function useJobs(filters = {}) {
     if (reset) setLoading(true);
     setError(null);
 
-    const { data, error: err } = await buildQuery(offset);
+    const q = buildQuery(offset);
+    if (q === null) { setJobs([]); setHasMore(false); setLoading(false); return; }
+
+    const { data, error: err } = await q;
     if (err) { setError(err.message); setLoading(false); return; }
 
     const rows = data ?? [];
@@ -106,7 +117,7 @@ export function useAdminJobs() {
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState(null);
 
-  const fetch = useCallback(async (statusFilter = 'all') => {
+  const refetchJobs = useCallback(async (statusFilter = 'all') => {
     setLoading(true);
     let q = supabase.from('jobs').select('*').order('created_at', { ascending: false });
     if (statusFilter !== 'all') q = q.eq('status', statusFilter);
@@ -116,10 +127,10 @@ export function useAdminJobs() {
     setLoading(false);
   }, []);
 
-  useEffect(() => { fetch(); }, [fetch]);
+  useEffect(() => { refetchJobs(); }, [refetchJobs]);
 
-  // Duplicate check: same title+company+city (case-insensitive)
-  async function checkDuplicate(title, company, city) {
+  // Duplicate check: same title+company (case-insensitive)
+  async function checkDuplicate(title, company) {
     const { data } = await supabase
       .from('jobs')
       .select('id, title, company, city')
@@ -143,7 +154,7 @@ export function useAdminJobs() {
   async function bulkImport(rows) {
     const results = { inserted: 0, duplicates: 0, errors: 0, rows: [] };
     for (const row of rows) {
-      const dup = await checkDuplicate(row.title, row.company, row.city ?? '');
+      const dup = await checkDuplicate(row.title, row.company ?? '');
       if (dup) { results.duplicates++; results.rows.push({ ...row, _result: 'duplicate', _dup: dup }); continue; }
       const { data, error: err } = await supabase
         .from('jobs')
@@ -153,7 +164,7 @@ export function useAdminJobs() {
       if (err) { results.errors++; results.rows.push({ ...row, _result: 'error', _err: err.message }); }
       else { results.inserted++; results.rows.push({ ...data, _result: 'inserted' }); }
     }
-    await fetch();
+    await refetchJobs();
     return results;
   }
 
@@ -187,5 +198,5 @@ export function useAdminJobs() {
     active:   jobs.filter((j) => j.is_active && j.status === 'approved').length,
   };
 
-  return { jobs, loading, error, stats, createJob, updateJob, deleteJob, setStatus, toggleActive, bulkImport, checkDuplicate, refetch: fetch };
+  return { jobs, loading, error, stats, createJob, updateJob, deleteJob, setStatus, toggleActive, bulkImport, checkDuplicate, refetch: refetchJobs };
 }

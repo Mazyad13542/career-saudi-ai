@@ -163,23 +163,21 @@ export default function Candidates() {
                   </p>
 
                   {/* Scores */}
-                  {c?.career_score != null && (
-                    <div className="grid grid-cols-2 gap-2 mb-4">
-                      <div className="text-center p-2 bg-gray-50 rounded-xl">
-                        <p className="text-base font-black text-[#006C35]">{c.career_score}</p>
-                        <p className="text-[9px] text-gray-400">نقاط المهنة</p>
-                      </div>
-                      <div className="text-center p-2 bg-gray-50 rounded-xl">
-                        <p className="text-base font-black text-blue-600">{c?.profile_data?.atsScore ?? '—'}</p>
-                        <p className="text-[9px] text-gray-400">ATS</p>
-                      </div>
+                  <div className="grid grid-cols-2 gap-2 mb-4">
+                    <div className="text-center p-2 bg-gray-50 rounded-xl">
+                      <p className="text-base font-black text-[#006C35]">{c?.career_score ?? '—'}</p>
+                      <p className="text-[9px] text-gray-400">نقاط المهنة</p>
                     </div>
-                  )}
+                    <div className="text-center p-2 bg-gray-50 rounded-xl">
+                      <p className="text-base font-black text-blue-600">{c?.ats_score ?? '—'}</p>
+                      <p className="text-[9px] text-gray-400">ATS</p>
+                    </div>
+                  </div>
 
                   {/* Skills */}
-                  {(c?.profile_data?.skills ?? []).length > 0 && (
+                  {(c?.skills ?? []).length > 0 && (
                     <div className="flex flex-wrap gap-1 mb-4">
-                      {(c.profile_data.skills).slice(0, 3).map((skill) => (
+                      {(c.skills).slice(0, 4).map((skill) => (
                         <span key={skill} className="px-2 py-0.5 bg-gray-50 border border-gray-100 text-[10px] text-gray-500 rounded-full">{skill}</span>
                       ))}
                     </div>

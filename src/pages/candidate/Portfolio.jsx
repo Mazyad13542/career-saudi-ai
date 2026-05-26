@@ -229,7 +229,7 @@ export default function Portfolio() {
                 احصل على نطاقك الخاص: <strong className="latin">yourname.com</strong><br />
                 رابط احترافي ولا يُنسى
               </p>
-              <Link to="/pricing">
+              <Link to="/#pricing">
                 <Button variant="gold" size="sm" className="w-full">ترقَّ إلى المميز</Button>
               </Link>
             </div>

@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  MapPin, AlertCircle, CheckCircle, Lock, ExternalLink,
-  TrendingUp, BookOpen, Award, Bookmark, BookmarkCheck,
-  Loader2, GraduationCap, Wifi, ChevronDown, RefreshCw,
+  MapPin, AlertCircle, Lock, ExternalLink,
+  Bookmark, BookmarkCheck,
+  Loader2, Wifi, RefreshCw,
 } from 'lucide-react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import Button from '../../components/ui/Button';
@@ -11,73 +11,20 @@ import { useJobs, useSavedJobs } from '../../hooks/useJobs';
 import { useAuth } from '../../context/AuthContext';
 import { useApplications } from '../../hooks/useApplications';
 import { track, EVENTS } from '../../lib/analytics';
-
-// ── Matching Engine ───────────────────────────────────────────────────────────
-function computeScore(job, profile) {
-  let score = 60; // base
-  const profileSkills = (profile?.profile_data?.skills ?? []).map((s) => s.toLowerCase());
-  const jobSkills     = (job.skills ?? []).map((s) => s.toLowerCase());
-  const userCity      = profile?.city ?? '';
-  const userJobTitle  = (profile?.job_title ?? '').toLowerCase();
-  const userSector    = (profile?.profile_data?.sector ?? '').toLowerCase();
-
-  // Skill match (up to +25 pts)
-  if (jobSkills.length && profileSkills.length) {
-    const matched = jobSkills.filter((s) => profileSkills.some((u) => u.includes(s) || s.includes(u)));
-    score += Math.min(25, Math.round((matched.length / jobSkills.length) * 25));
-  } else if (!jobSkills.length) {
-    score += 10; // no skill requirements = accessible
-  }
-
-  // City match (+8 pts)
-  if (userCity && job.city && job.city === userCity) score += 8;
-  // Remote bonus if user city doesn't match (+4 pts)
-  if (job.is_remote) score += 4;
-
-  // Sector/title match (+7 pts)
-  const jobSector = (job.sector ?? '').toLowerCase();
-  if (userSector && jobSector && (userSector.includes(jobSector) || jobSector.includes(userSector))) score += 7;
-  else if (userJobTitle && (job.title.toLowerCase().includes(userJobTitle) || userJobTitle.includes(job.title.toLowerCase()))) score += 5;
-
-  // Experience level
-  const pd = profile?.profile_data ?? {};
-  const expYears = pd.yearsOfExperience ?? 0;
-  const lvl = job.experience_level;
-  if (lvl === 'مبتدئ'  && expYears <= 2) score += 5;
-  if (lvl === 'متوسط'  && expYears >= 2 && expYears <= 6) score += 5;
-  if (lvl === 'متقدم'  && expYears >= 5) score += 5;
-  if (lvl === 'خبير'   && expYears >= 8) score += 5;
-
-  // Fresh graduate flag
-  if (job.fresh_graduate && expYears <= 1) score += 5;
-
-  // Preferred job type match (+5 pts)
-  const prefType = pd.preferredJobType;
-  if (prefType && job.job_type === prefType) score += 5;
-
-  return Math.min(99, score);
-}
+import { matchJobToProfile, matchLabel } from '../../lib/jobMatcher';
 
 function buildReasons(job, profile) {
-  const profileSkills = (profile?.profile_data?.skills ?? []).map((s) => s.toLowerCase());
-  const jobSkills     = (job.skills ?? []).map((s) => s.toLowerCase());
-  const reasons = [];
-  const matched = jobSkills.filter((s) => profileSkills.some((u) => u.includes(s) || s.includes(u)));
-  if (matched.length) reasons.push(`مهاراتك في ${matched.slice(0, 2).map((s) => job.skills.find((js) => js.toLowerCase() === s) ?? s).join(' و')} تتطابق`);
-  if (profile?.city && job.city === profile.city) reasons.push(`الوظيفة في مدينتك: ${profile.city}`);
-  if (job.is_remote) reasons.push('الوظيفة متاحة عن بُعد');
-  if (job.fresh_graduate) reasons.push('مخصصة لحديثي التخرج');
-  const sector = (profile?.profile_data?.sector ?? '').toLowerCase();
-  const jobSector = (job.sector ?? '').toLowerCase();
-  if (sector && jobSector && (sector.includes(jobSector) || jobSector.includes(sector))) reasons.push(`تخصصك يتوافق مع قطاع ${job.sector}`);
-  if (!reasons.length) reasons.push(`ملفك المهني يتوافق مع متطلبات ${job.company}`);
-  return reasons.slice(0, 3);
+  const { reasons } = matchJobToProfile(profile, job);
+  return reasons
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3)
+    .map(r => `${r.label}: ${r.score}٪`);
 }
 
 function buildGaps(job, profile) {
-  const profileSkills = (profile?.profile_data?.skills ?? []).map((s) => s.toLowerCase());
+  const profileSkills = (profile?.skills ?? []).map(s => s.toLowerCase());
   return (job.skills ?? [])
-    .filter((s) => !profileSkills.some((u) => u.includes(s.toLowerCase()) || s.toLowerCase().includes(u)))
+    .filter(s => !profileSkills.some(u => u.includes(s.toLowerCase()) || s.toLowerCase().includes(u)))
     .slice(0, 3);
 }
 
@@ -106,11 +53,11 @@ export default function JobsForYou() {
   const rankedJobs = useMemo(() => {
     if (!jobs.length) return [];
     return [...jobs]
-      .map((j) => ({ ...j, _score: computeScore(j, profile) }))
+      .map(j => ({ ...j, _score: matchJobToProfile(profile, j).score }))
       .sort((a, b) => b._score - a._score);
   }, [jobs, profile]);
 
-  const filtered  = rankedJobs.filter((j) => j._score >= minScore);
+  const filtered  = rankedJobs.filter(j => j._score >= minScore);
   const displayed = premium ? filtered : filtered.slice(0, 3);
   const locked    = !premium && filtered.length > 3;
 
@@ -120,7 +67,7 @@ export default function JobsForYou() {
     ? Math.round(rankedJobs.reduce((s, j) => s + j._score, 0) / rankedJobs.length)
     : 0;
 
-  const hasProfileData = !!(profile?.profile_data?.skills?.length || profile?.city || profile?.job_title);
+  const hasProfileData = !!(profile?.skills?.length || profile?.city || profile?.job_title);
 
   const handleApply = async (job) => {
     if (applied[job.id]) return;
