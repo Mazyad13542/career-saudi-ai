@@ -5,8 +5,8 @@ import { X, Lock, Shield, CheckCircle, AlertCircle, Crown } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { track, EVENTS } from '../../lib/analytics';
 
-const USD_AMOUNT   = '2.40';
-const SDK_CURRENCY = 'USD';
+const SAR_AMOUNT   = '99';
+const SDK_CURRENCY = 'SAR';
 const PLAN_LABEL   = 'الاشتراك الكامل';
 const SUCCESS_PATH = '/payment-success';
 const CANCEL_PATH  = '/#pricing';
@@ -95,12 +95,12 @@ function PayPalCheckout({ onSuccess, onCancel, onRetry }) {
     <>
       <PayPalButtons
         style={{ layout: 'vertical', color: 'gold', shape: 'rect', label: 'pay', height: 50 }}
-        forceReRender={[USD_AMOUNT, SDK_CURRENCY]}
+        forceReRender={[SAR_AMOUNT, SDK_CURRENCY]}
         createOrder={(data, actions) => {
           return actions.order.create({
             intent: 'CAPTURE',
             purchase_units: [{
-              amount: { currency_code: SDK_CURRENCY, value: USD_AMOUNT },
+              amount: { currency_code: SDK_CURRENCY, value: SAR_AMOUNT },
               description: `قِمّة - ${PLAN_LABEL}`,
             }],
             application_context: { shipping_preference: 'NO_SHIPPING', brand_name: 'Qimmah' },
@@ -110,7 +110,7 @@ function PayPalCheckout({ onSuccess, onCancel, onRetry }) {
           setTxStatus('processing');
           return actions.order.capture().then(async () => {
             const { error } = await upgradeToPremium(data.orderID);
-            if (!error) track(EVENTS.SUBSCRIPTION_PAID, { orderId: data.orderID, amount: USD_AMOUNT });
+            if (!error) track(EVENTS.SUBSCRIPTION_PAID, { orderId: data.orderID, amount: SAR_AMOUNT });
             setTxStatus('success');
             setTimeout(onSuccess, 1800);
           }).catch(() => {
@@ -163,7 +163,7 @@ export default function PaymentModal({ isOpen, onClose }) {
                 <Crown size={16} className="text-[#C8A951]" />
               </div>
               <div>
-                <p className="text-[10px] font-bold text-green-300 uppercase tracking-widest">اشتراك شهري</p>
+                <p className="text-[10px] font-bold text-green-300 uppercase tracking-widest">دفع مرة واحدة</p>
                 <h2 className="text-base font-black text-white">{PLAN_LABEL}</h2>
               </div>
             </div>
@@ -175,13 +175,12 @@ export default function PaymentModal({ isOpen, onClose }) {
           <div className="bg-white/8 border border-white/10 rounded-2xl px-4 py-3 flex items-center justify-between">
             <div className="text-right">
               <div className="flex items-baseline gap-1.5">
-                <span className="text-3xl font-black text-white stat-number">٩</span>
-                <span className="text-green-200 font-bold">ريال</span>
-                <span className="text-green-300/70 text-sm">/ شهر</span>
+                <span className="text-3xl font-black text-white stat-number">٩٩</span>
+                <span className="text-green-200 font-bold">ر.س</span>
               </div>
-              <p className="text-[10px] text-green-300/60 mt-0.5">إلغاء في أي وقت · لا رسوم خفية</p>
+              <p className="text-[10px] text-green-300/60 mt-0.5">دفع مرة واحدة فقط · لا رسوم خفية</p>
             </div>
-            <span className="text-xs font-black text-[#C8A951] px-3 py-1 bg-[#C8A951]/20 border border-[#C8A951]/30 rounded-full">وفّر ٩١٪</span>
+            <span className="text-xs font-black text-[#C8A951] px-3 py-1 bg-[#C8A951]/20 border border-[#C8A951]/30 rounded-full">وفّر ٦٧٪</span>
           </div>
         </div>
 

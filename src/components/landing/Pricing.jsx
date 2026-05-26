@@ -79,24 +79,22 @@ export default function Pricing() {
                   {/* Old price */}
                   <div className="flex items-center gap-2 mb-2">
                     <span className="text-sm font-black text-[#C8A951] px-2.5 py-0.5 bg-[#C8A951]/15 border border-[#C8A951]/25 rounded-full">
-                      وفّر ٩١٪
+                      وفّر ٦٧٪
                     </span>
-                    <span className="text-lg text-gray-600 line-through font-bold">٩٩ ريال</span>
+                    <span className="text-lg text-gray-600 line-through font-bold">٢٩٩ ر.س</span>
                   </div>
 
                   {/* Main price */}
                   <div className="flex items-baseline gap-2">
                     <span className="text-7xl sm:text-8xl font-black text-white leading-none tabular-nums"
                           style={{ textShadow: '0 0 40px rgba(0,108,53,0.4)' }}>
-                      ٩
+                      ٩٩
                     </span>
-                    <div className="flex flex-col items-start">
-                      <span className="text-xl font-black text-[#00A651]">ريال</span>
-                      <span className="text-xs text-gray-500 font-bold">/ شهر</span>
-                    </div>
+                    <span className="text-xl font-black text-[#00A651] self-end mb-1">ر.س</span>
                   </div>
 
-                  <p className="text-xs text-gray-600 mt-2">إلغاء في أي وقت · لا رسوم خفية</p>
+                  <p className="text-sm font-bold text-[#C8A951] mt-2">دفع مرة واحدة فقط</p>
+                  <p className="text-xs text-gray-600 mt-1">لا رسوم خفية · لا اشتراك متكرر</p>
                 </div>
               </div>
 

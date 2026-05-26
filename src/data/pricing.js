@@ -2,8 +2,8 @@ export const pricingPlans = [
   {
     id: 'professional',
     name: 'الاشتراك الكامل',
-    price: 9,
-    oldPrice: 99,
+    price: 99,
+    oldPrice: 299,
     period: 'شهر',
     description: 'كل ما تحتاجه للحصول على وظيفة بشكل احترافي',
     badge: 'عدد المقاعد محدود',
