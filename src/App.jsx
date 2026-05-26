@@ -1,6 +1,32 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import { supabase } from './lib/supabase';
+
+const AUTH_PUBLIC_PATHS = ['/', '/login', '/register'];
+
+function AuthRedirect() {
+  const navigate = useNavigate();
+  const locationRef = useRef(window.location.pathname);
+
+  useEffect(() => {
+    locationRef.current = window.location.pathname;
+  });
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        if (AUTH_PUBLIC_PATHS.includes(locationRef.current)) {
+          navigate('/dashboard', { replace: true });
+        }
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [navigate]);
+
+  return null;
+}
 
 // Public pages
 import LandingPage from './pages/LandingPage';
@@ -55,6 +81,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <AuthRedirect />
         <Routes>
           {/* ── Public ── */}
           <Route path="/"         element={<LandingPage />} />

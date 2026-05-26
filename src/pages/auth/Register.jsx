@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, User, AlertCircle, CheckCircle } from 'lucide-react';
 import Button from '../../components/ui/Button';
@@ -6,8 +6,12 @@ import { useAuth } from '../../context/AuthContext';
 import { track, EVENTS } from '../../lib/analytics';
 
 export default function Register() {
-  const { signUp, signInWithGoogle } = useAuth();
+  const { signUp, signInWithGoogle, session, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!authLoading && session) navigate('/dashboard', { replace: true });
+  }, [session, authLoading, navigate]);
 
   const [step,    setStep]    = useState(1);
   const [loading, setLoading] = useState(false);

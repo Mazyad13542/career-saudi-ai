@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Sparkles, FileText, Globe, Building2 } from 'lucide-react';
 import Button from '../ui/Button';
+import { useAuth } from '../../context/AuthContext';
 
 const socialProof = [
   { icon: FileText,   value: '+٣,٢٠٠', label: 'ملف مهني جُهِّز' },
@@ -9,6 +10,9 @@ const socialProof = [
 ];
 
 export default function CTA() {
+  const { session } = useAuth();
+  const ctaHref = session ? '/dashboard' : '/register';
+
   return (
     <section className="py-24 bg-gray-950 relative overflow-hidden" dir="rtl">
       <div className="absolute inset-0 saudi-geo-pattern opacity-[0.05] pointer-events-none" />
@@ -56,14 +60,14 @@ export default function CTA() {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-          <Link to="/register">
+          <Link to={ctaHref}>
             <Button variant="primary" size="xl" className="w-full sm:w-auto shadow-xl-saudi">
               <Sparkles size={18} />
-              ابدأ تجهيز ملفك المهني
+              {session ? 'الذهاب إلى لوحة التحكم' : 'ابدأ تجهيز ملفك المهني'}
               <ArrowLeft size={18} className="icon-rtl-flip" />
             </Button>
           </Link>
-          <a href="#pricing">
+          <a href={session ? '/dashboard' : '#pricing'}>
             <Button variant="secondary" size="xl" className="w-full sm:w-auto border-gray-700 bg-gray-900 text-white hover:bg-gray-800">
               اطلب التقديم على ١٠٠ شركة
             </Button>

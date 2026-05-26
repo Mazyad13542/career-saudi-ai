@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import Button from '../../components/ui/Button';
@@ -6,10 +6,14 @@ import { useAuth } from '../../context/AuthContext';
 import { track, EVENTS } from '../../lib/analytics';
 
 export default function Login() {
-  const { signIn, signInWithGoogle } = useAuth();
+  const { signIn, signInWithGoogle, session, loading: authLoading } = useAuth();
   const navigate  = useNavigate();
   const location  = useLocation();
   const redirect  = location.state?.from || '/dashboard';
+
+  useEffect(() => {
+    if (!authLoading && session) navigate('/dashboard', { replace: true });
+  }, [session, authLoading, navigate]);
 
   const [showPass, setShowPass]   = useState(false);
   const [loading,  setLoading]    = useState(false);

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Sparkles } from 'lucide-react';
 import Button from '../ui/Button';
+import { useAuth } from '../../context/AuthContext';
 
 const navLinks = [
   { label: 'الخدمات', href: '#features' },
@@ -10,6 +11,7 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const { session } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -30,15 +32,26 @@ export default function Navbar() {
 
           {/* CTA Buttons — right side in RTL becomes left visually */}
           <div className="hidden md:flex items-center gap-3">
-            <Link to="/login">
-              <Button variant="ghost" size="sm">تسجيل الدخول</Button>
-            </Link>
-            <Link to="/register">
-              <Button variant="primary" size="sm">
-                <Sparkles size={14} />
-                ابدأ مجاناً
-              </Button>
-            </Link>
+            {session ? (
+              <Link to="/dashboard">
+                <Button variant="primary" size="sm">
+                  <Sparkles size={14} />
+                  لوحة التحكم
+                </Button>
+              </Link>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="ghost" size="sm">تسجيل الدخول</Button>
+                </Link>
+                <Link to="/register">
+                  <Button variant="primary" size="sm">
+                    <Sparkles size={14} />
+                    ابدأ مجاناً
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Desktop Nav Links */}
@@ -110,15 +123,26 @@ export default function Navbar() {
               )
             ))}
             <div className="pt-3 flex flex-col gap-2">
-              <Link to="/login" onClick={() => setMobileOpen(false)}>
-                <Button variant="secondary" size="md" className="w-full">تسجيل الدخول</Button>
-              </Link>
-              <Link to="/register" onClick={() => setMobileOpen(false)}>
-                <Button variant="primary" size="md" className="w-full">
-                  <Sparkles size={14} />
-                  ابدأ مجاناً
-                </Button>
-              </Link>
+              {session ? (
+                <Link to="/dashboard" onClick={() => setMobileOpen(false)}>
+                  <Button variant="primary" size="md" className="w-full">
+                    <Sparkles size={14} />
+                    لوحة التحكم
+                  </Button>
+                </Link>
+              ) : (
+                <>
+                  <Link to="/login" onClick={() => setMobileOpen(false)}>
+                    <Button variant="secondary" size="md" className="w-full">تسجيل الدخول</Button>
+                  </Link>
+                  <Link to="/register" onClick={() => setMobileOpen(false)}>
+                    <Button variant="primary" size="md" className="w-full">
+                      <Sparkles size={14} />
+                      ابدأ مجاناً
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Sparkles, Send, FileText, Globe, Building2, MessageSquare } from 'lucide-react';
 import Button from '../ui/Button';
+import { useAuth } from '../../context/AuthContext';
 
 const STATS = [
   { end: 3200, suffix: '+',  label: 'ملف مهني جُهِّز',   decimals: 0 },
@@ -63,6 +64,9 @@ function StatsRow() {
 }
 
 export default function Hero() {
+  const { session } = useAuth();
+  const ctaHref = session ? '/dashboard' : '/register';
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white">
       <div className="absolute inset-0 saudi-geo-pattern opacity-40 pointer-events-none" />
@@ -108,14 +112,14 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-5">
-            <Link to="/register">
+            <Link to={ctaHref}>
               <Button variant="primary" size="xl" className="w-full sm:w-auto shadow-xl-saudi">
                 <Sparkles size={18} />
-                ابدأ تجهيز ملفك المهني
+                {session ? 'الذهاب إلى لوحة التحكم' : 'ابدأ تجهيز ملفك المهني'}
                 <ArrowLeft size={18} className="icon-rtl-flip" />
               </Button>
             </Link>
-            <a href="#pricing">
+            <a href={session ? '/dashboard' : '#pricing'}>
               <Button variant="secondary" size="xl" className="w-full sm:w-auto">
                 اطلب التقديم على ١٠٠ شركة
               </Button>
