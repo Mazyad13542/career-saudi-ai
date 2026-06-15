@@ -1,9 +1,9 @@
-import { FileText, Globe, Building2, MessageSquare, Camera, Linkedin, User2 } from 'lucide-react';
+import { FileText, Globe, Building2, MessageSquare, Camera, Link2, User2 } from 'lucide-react';
 
 const SERVICES = [
   {
     id: 1,
-    icon: Linkedin,
+    icon: Link2,
     titleAr: 'تنظيم LinkedIn',
     description: 'نُحسِّن ملفك على LinkedIn بمحتوى احترافي جذاب يزيد من ظهورك لمسؤولي التوظيف ويعكس كفاءتك الحقيقية.',
     color: 'blue',
