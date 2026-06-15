@@ -247,3 +247,48 @@ CREATE POLICY "admin_payments_select" ON public.payments FOR SELECT USING (
 --    Bucket: cvs  |  Operation: INSERT  |  Expression: (storage.foldername(name))[1] = auth.uid()::text
 --    Bucket: cvs  |  Operation: SELECT  |  Expression: (storage.foldername(name))[1] = auth.uid()::text
 --    Bucket: cvs  |  Operation: DELETE  |  Expression: (storage.foldername(name))[1] = auth.uid()::text
+
+-- ── CLIENT INTAKE ────────────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS public.client_intake (
+  id               UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id          UUID REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+  -- Personal
+  full_name        TEXT,
+  phone            TEXT,
+  region           TEXT,
+  city             TEXT,
+  -- Education
+  university       TEXT,
+  degree           TEXT,
+  major            TEXT,
+  graduation_year  TEXT,
+  -- Experience
+  experience_years TEXT,
+  last_job_title   TEXT,
+  last_company     TEXT,
+  skills           TEXT,
+  languages        TEXT[],
+  target_job       TEXT,
+  target_sector    TEXT,
+  -- Additional
+  linkedin_url     TEXT,
+  additional_info  TEXT,
+  -- Admin
+  status           TEXT DEFAULT 'new' CHECK (status IN ('new','in_progress','completed','delivered')),
+  admin_notes      TEXT,
+  created_at       TIMESTAMPTZ DEFAULT NOW(),
+  updated_at       TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE (user_id)
+);
+
+ALTER TABLE public.client_intake ENABLE ROW LEVEL SECURITY;
+
+-- Users can only see/edit their own intake
+CREATE POLICY "Users manage own intake" ON public.client_intake
+  FOR ALL USING (auth.uid() = user_id);
+
+-- Admins can see all intakes
+CREATE POLICY "Admins view all intakes" ON public.client_intake
+  FOR ALL USING (
+    EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
+  );

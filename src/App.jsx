@@ -68,6 +68,10 @@ import SavedCandidates from './pages/hr/SavedCandidates';
 import AdminOverview from './pages/admin/AdminOverview';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminJobs from './pages/admin/AdminJobs';
+import AdminOrders from './pages/admin/AdminOrders';
+
+// Client
+import IntakeForm from './pages/client/IntakeForm';
 
 function PrivateRoute({ children, requirePremium, requireRole }) {
   return (
@@ -120,10 +124,14 @@ export default function App() {
           <Route path="/hr-dashboard/analytics"  element={<PrivateRoute requireRole={['hr','admin']}><HRAnalytics /></PrivateRoute>} />
           <Route path="/hr-dashboard/saved"      element={<PrivateRoute requireRole={['hr','admin']}><SavedCandidates /></PrivateRoute>} />
 
+          {/* ── Intake Form (requires auth) ── */}
+          <Route path="/dashboard/intake" element={<PrivateRoute><IntakeForm /></PrivateRoute>} />
+
           {/* ── Admin (requires admin role) ── */}
-          <Route path="/admin"        element={<PrivateRoute requireRole="admin"><AdminOverview /></PrivateRoute>} />
-          <Route path="/admin/users"  element={<PrivateRoute requireRole="admin"><AdminUsers /></PrivateRoute>} />
-          <Route path="/admin/jobs"   element={<PrivateRoute requireRole="admin"><AdminJobs /></PrivateRoute>} />
+          <Route path="/admin"          element={<PrivateRoute requireRole="admin"><AdminOverview /></PrivateRoute>} />
+          <Route path="/admin/users"    element={<PrivateRoute requireRole="admin"><AdminUsers /></PrivateRoute>} />
+          <Route path="/admin/jobs"     element={<PrivateRoute requireRole="admin"><AdminJobs /></PrivateRoute>} />
+          <Route path="/admin/orders"   element={<PrivateRoute requireRole="admin"><AdminOrders /></PrivateRoute>} />
 
           {/* ── Shortcuts & catch-all ── */}
           <Route path="/pricing" element={<Navigate to="/#pricing" replace />} />

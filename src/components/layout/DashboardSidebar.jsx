@@ -9,14 +9,9 @@ import { cn } from '../../utils/helpers';
 import { useAuth } from '../../context/AuthContext';
 
 const CANDIDATE_NAV = [
-  { icon: LayoutDashboard, label: 'الرئيسية',               href: '/dashboard' },
-  { icon: Send,            label: 'البرودكاست',              href: '/dashboard/broadcast' },
-  { icon: FileText,        label: 'السيرة الذاتية',          href: '/dashboard/cv' },
-  { icon: Globe,           label: 'الموقع الشخصي',           href: '/dashboard/portfolio' },
-  { icon: Building2,       label: 'التقديم على الشركات',     href: '/dashboard/applications' },
-  { icon: MessageSquare,   label: 'ردود الشركات',            href: '/dashboard/replies' },
-  { icon: CreditCard,      label: 'اشتراكي',                 href: '/dashboard/subscription' },
-  { icon: Settings,        label: 'الإعدادات',               href: '/dashboard/settings' },
+  { icon: LayoutDashboard, label: 'نظرة عامة',               href: '/dashboard' },
+  { icon: FileText,        label: 'استمارة المعلومات',        href: '/dashboard/intake' },
+  { icon: Settings,        label: 'الإعدادات',                href: '/dashboard/settings' },
 ];
 
 const HR_NAV = [

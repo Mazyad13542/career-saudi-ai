@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Check, Crown, Flame, Users } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import PaymentModal from '../payment/PaymentModal';
 
 const FEATURES = [
@@ -132,11 +131,8 @@ export default function Pricing() {
               <div className="mt-8 pt-6 border-t border-white/6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-600">
                 <span className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#006C35]" />
-                  لا يلزم بطاقة ائتمانية للتجربة
+                  دعم مباشر عبر واتساب
                 </span>
-                <Link to="/register" className="text-[#006C35] font-bold hover:underline">
-                  جرّب مجاناً أولاً ←
-                </Link>
                 <span className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#C8A951]" />
                   ضمان استرداد كامل ٣٠ يوم
