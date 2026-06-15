@@ -102,8 +102,8 @@ export function AuthProvider({ children }) {
       supabase.from('payments').insert({
         user_id:         user.id,
         paypal_order_id: paypalOrderId,
-        amount_usd:      26.40,
-        amount_sar:      99,
+        amount_usd:      53.07,
+        amount_sar:      199,
         status:          'completed',
         plan:            'professional',
         period_months:   1,
