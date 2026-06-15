@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Sparkles, Send, FileText, Globe, Building2, MessageSquare } from 'lucide-react';
+import { ArrowLeft, Sparkles, FileText, Globe, Building2, MessageSquare, User2, Linkedin } from 'lucide-react';
 import Button from '../ui/Button';
 import { useAuth } from '../../context/AuthContext';
 
@@ -12,11 +12,12 @@ const STATS = [
 ];
 
 const SERVICES = [
-  { icon: Send,        label: 'البرودكاست',            color: 'bg-[#006C35]/10 text-[#006C35]' },
-  { icon: FileText,    label: 'السيرة الذاتية ATS',    color: 'bg-blue-50 text-blue-600' },
-  { icon: Globe,       label: 'الموقع الشخصي',         color: 'bg-purple-50 text-purple-600' },
-  { icon: Building2,   label: '١٠٠+ شركة',             color: 'bg-amber-50 text-amber-600' },
-  { icon: MessageSquare, label: 'متابعة الردود',        color: 'bg-rose-50 text-rose-600' },
+  { icon: Linkedin,      label: 'LinkedIn',           color: 'bg-blue-50 text-blue-600' },
+  { icon: Globe,         label: 'الموقع الشخصي',      color: 'bg-purple-50 text-purple-600' },
+  { icon: User2,         label: 'صورة احترافية',       color: 'bg-rose-50 text-rose-600' },
+  { icon: FileText,      label: 'سيرة ذاتية',          color: 'bg-[#006C35]/10 text-[#006C35]' },
+  { icon: MessageSquare, label: 'رسالة تقديم',         color: 'bg-amber-50 text-amber-600' },
+  { icon: Building2,     label: '٢٠٠ شركة',           color: 'bg-indigo-50 text-indigo-600' },
 ];
 
 function StatsRow() {
@@ -96,7 +97,7 @@ export default function Hero() {
 
           <p className="text-lg sm:text-xl text-gray-500 leading-loose mb-6 max-w-2xl mx-auto">
             سيرتك الذاتية، موقعك الشخصي، ونُقدِّم عنك على{' '}
-            <span className="text-[#006C35] font-bold">١٠٠+ شركة سعودية</span>
+            <span className="text-[#006C35] font-bold">٢٠٠ شركة سعودية</span>
             {' '}مع متابعة كل رد.
           </p>
 
@@ -119,9 +120,9 @@ export default function Hero() {
                 <ArrowLeft size={18} className="icon-rtl-flip" />
               </Button>
             </Link>
-            <a href={session ? '/dashboard' : '#pricing'}>
+            <a href="#features">
               <Button variant="secondary" size="xl" className="w-full sm:w-auto">
-                اطلب التقديم على ١٠٠ شركة
+                اطلع على الخدمات
               </Button>
             </a>
           </div>

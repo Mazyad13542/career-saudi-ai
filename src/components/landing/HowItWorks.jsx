@@ -1,45 +1,29 @@
-import { UserPlus, FileText, Globe, Send, MessageSquare } from 'lucide-react';
+import { CreditCard, ClipboardList, Phone } from 'lucide-react';
 
 const steps = [
   {
     step: '٠١',
-    icon: UserPlus,
-    title: 'سجّل وأخبرنا عنك',
-    description: 'سجّل حسابك في دقيقتين. أخبرنا عن تخصصك وخبرتك وأهدافك المهنية — نبني عليها كل الخدمات.',
+    icon: CreditCard,
+    title: 'اشتري الباقة',
+    description: 'ادفع مرة واحدة وافتح الوصول الكامل لجميع الخدمات الست دفعة واحدة.',
     color: '#006C35',
-    features: ['إعداد الملف الشخصي', 'تحديد المجال والأهداف', 'رفع بيانات الخبرة'],
+    features: ['دفع آمن', 'آني الفعّل', 'ضمان ٣٠ يوم'],
   },
   {
     step: '٠٢',
-    icon: FileText,
-    title: 'نُجهِّز سيرتك وموقعك',
-    description: 'نبني سيرة ذاتية ATS محسّنة وموقعاً شخصياً احترافياً جاهزاً للمشاركة مع أصحاب العمل.',
-    color: '#1A56DB',
-    features: ['سيرة ذاتية ATS', 'موقع شخصي مخصص', 'صياغة احترافية'],
+    icon: ClipboardList,
+    title: 'أرسل معلوماتك',
+    description: 'أملأ استمارة مفصّلة بمعلوماتك — تخصصك، خبرتك، شهاداتك، وصورتك الشخصية.',
+    color: '#C8A951',
+    features: ['استمارة ذكية', 'رفع الشهادات', 'آمن ومحمي'],
   },
   {
     step: '٠٣',
-    icon: Send,
-    title: 'نُرسل البرودكاست',
-    description: 'نُعدّ رسالة تعريفية مخصصة ونُرسلها بأسلوب احترافي لشركات مستهدفة تناسب مجالك وتطلعاتك.',
-    color: '#C8A951',
-    features: ['رسالة مخصصة', 'شركات مستهدفة', 'أسلوب احترافي'],
-  },
-  {
-    step: '٠٤',
-    icon: Globe,
-    title: 'نُقدِّم على ١٠٠+ شركة',
-    description: 'نتقدم عنك على ١٠٠ شركة سعودية أو أكثر، مع عرض حالة كل تقديم وتحديثات مستمرة.',
-    color: '#7C3AED',
-    features: ['١٠٠+ شركة', 'تتبع كل تقديم', 'تحديثات مستمرة'],
-  },
-  {
-    step: '٠٥',
-    icon: MessageSquare,
-    title: 'تتابع الردود والمقابلات',
-    description: 'نُبلّغك بكل رد — شركة ردّت، طلبت مقابلة، أو رفضت. لوحة واضحة لكل حالة.',
-    color: '#E11D48',
-    features: ['إشعارات الردود', 'مواعيد المقابلات', 'سجل كامل'],
+    icon: Phone,
+    title: 'استلم كل شيء على واتساب',
+    description: 'بعد إنجاز جميع الخدمات، نُرسل لك كل شيء على رقم واتساب الخاص بك خلال ٧٢ ساعة.',
+    color: '#1A56DB',
+    features: ['واتساب مباشر', 'ملفات جاهزة', 'خلال ٧٢ ساعة'],
   },
 ];
 
@@ -56,20 +40,19 @@ export default function HowItWorks() {
             <span className="text-xs font-bold text-gray-600">كيف نعمل لك</span>
           </div>
           <h2 className="arabic-heading text-3xl sm:text-4xl lg:text-5xl text-gray-900 mb-5">
-            من التسجيل إلى{' '}
-            <span className="text-gradient-green">المقابلة في ٥ خطوات</span>
+            <span className="text-gradient-green">٣ خطوات فقط</span>
           </h2>
           <p className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
-            نحن ننفّذ — أنت تنتظر النتائج. عملية واضحة ومنظمة من البداية حتى الحصول على المقابلات.
+            نحن ننفّذ — أنت تنتظر النتائج على واتساب.
           </p>
         </div>
 
         {/* Steps */}
         <div className="relative">
           {/* Connector line desktop */}
-          <div className="hidden lg:block absolute top-12 right-[10%] left-[10%] h-px bg-gradient-to-l from-[#E11D48] via-[#7C3AED] via-[#C8A951] via-[#1A56DB] to-[#006C35] opacity-20" />
+          <div className="hidden lg:block absolute top-12 right-[10%] left-[10%] h-px bg-gradient-to-l from-[#1A56DB] via-[#C8A951] to-[#006C35] opacity-20" />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {steps.map((step, index) => (
               <div key={index} className="relative flex flex-col items-center text-center group">
                 <div
@@ -107,17 +90,7 @@ export default function HowItWorks() {
 
         {/* Guarantee */}
         <div className="mt-16 p-8 rounded-3xl bg-white border border-gray-100 shadow-sm text-center">
-          <p className="text-2xl font-black text-gray-900 mb-2">🚀 نتائج خلال ٧٢ ساعة</p>
-          <p className="text-gray-500 text-sm max-w-xl mx-auto">
-            بعد تفعيل الخدمة، تحصل على سيرتك وموقعك جاهزَين خلال ٧٢ ساعة — وتبدأ التقديمات فوراً.
-          </p>
-          <div className="mt-4 flex flex-wrap justify-center gap-2">
-            {['الرياض','جدة','الظهران','نيوم','الدمام','مكة المكرمة','المدينة المنورة','تبوك','الخبر','أبها'].map((city) => (
-              <span key={city} className="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-full text-xs text-gray-600">
-                {city}
-              </span>
-            ))}
-          </div>
+          <p className="text-2xl font-black text-gray-900">🚀 الإنجاز خلال ٧٢ ساعة — كل خدماتك تصلك على واتساب</p>
         </div>
       </div>
     </section>
