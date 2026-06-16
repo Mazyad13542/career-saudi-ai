@@ -16,24 +16,47 @@ const PAIRS = [
   },
 ];
 
+function Placeholder({ label, isAfter }) {
+  return (
+    <div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 ${
+      isAfter
+        ? 'bg-gradient-to-b from-[#006C35]/10 to-[#006C35]/5'
+        : 'bg-gradient-to-b from-gray-200 to-gray-100'
+    }`}>
+      <div className={`w-16 h-16 rounded-full flex items-center justify-center ${
+        isAfter ? 'bg-[#006C35]/15' : 'bg-gray-300/50'
+      }`}>
+        <Camera size={28} className={isAfter ? 'text-[#006C35]' : 'text-gray-400'} />
+      </div>
+      <p className={`text-xs font-bold ${isAfter ? 'text-[#006C35]' : 'text-gray-400'}`}>{label}</p>
+    </div>
+  );
+}
+
 function BeforeAfterCard({ pair }) {
   const [showAfter, setShowAfter] = useState(false);
+  const [beforeLoaded, setBeforeLoaded] = useState(false);
+  const [afterLoaded, setAfterLoaded]   = useState(false);
 
   return (
     <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-shadow duration-300">
       {/* Image area */}
       <div className="relative aspect-[4/5] overflow-hidden bg-gray-100">
         {/* Before */}
+        {!beforeLoaded && !showAfter && <Placeholder label="صورة العميل قبل التعديل" isAfter={false} />}
         <img
           src={pair.before}
           alt="قبل"
-          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${showAfter ? 'opacity-0' : 'opacity-100'}`}
+          onLoad={() => setBeforeLoaded(true)}
+          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${showAfter ? 'opacity-0' : beforeLoaded ? 'opacity-100' : 'opacity-0'}`}
         />
         {/* After */}
+        {!afterLoaded && showAfter && <Placeholder label="الصورة الاحترافية النهائية" isAfter={true} />}
         <img
           src={pair.after}
           alt="بعد"
-          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${showAfter ? 'opacity-100' : 'opacity-0'}`}
+          onLoad={() => setAfterLoaded(true)}
+          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${showAfter ? afterLoaded ? 'opacity-100' : 'opacity-0' : 'opacity-0'}`}
         />
 
         {/* Label badge */}
