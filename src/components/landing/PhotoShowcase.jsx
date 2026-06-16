@@ -14,12 +14,12 @@ const PAIRS = [
   },
   {
     before: '/IMG_2467.JPG',
-    after:  '/779E47C6-4708-4A2F-86A3-7947037DFB25.PNG',
+    after:  '/99C0FD2C-B481-42CB-BBDA-08BC8BED932E.PNG',
     result: 'صورة احترافية للـ LinkedIn',
   },
   {
     before: '/IMG_2469.JPG',
-    after:  '/99C0FD2C-B481-42CB-BBDA-08BC8BED932E.PNG',
+    after:  '/779E47C6-4708-4A2F-86A3-7947037DFB25.PNG',
     result: 'صورة احترافية للـ CV',
   },
   {
