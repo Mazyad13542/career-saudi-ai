@@ -51,36 +51,30 @@ function Placeholder({ label, isAfter }) {
   );
 }
 
-function BeforeAfterCard({ pair, delay = 0 }) {
+function BeforeAfterCard({ pair, initialDelay = 0 }) {
   const [showAfter, setShowAfter] = useState(false);
   const [beforeLoaded, setBeforeLoaded] = useState(false);
   const [afterLoaded, setAfterLoaded]   = useState(false);
   const [paused, setPaused] = useState(false);
-  const intervalRef = useRef(null);
+  const [started, setStarted] = useState(false);
+  const timerRef = useRef(null);
+
+  // Wait for initialDelay before starting the cycle
+  useEffect(() => {
+    const t = setTimeout(() => setStarted(true), initialDelay);
+    return () => clearTimeout(t);
+  }, [initialDelay]);
 
   useEffect(() => {
-    const start = setTimeout(() => {
-      intervalRef.current = setInterval(() => {
-        if (!paused) setShowAfter(prev => !prev);
-      }, 2500);
-    }, delay);
-
-    return () => {
-      clearTimeout(start);
-      clearInterval(intervalRef.current);
-    };
-  }, [delay]);
-
-  useEffect(() => {
-    if (paused) {
-      clearInterval(intervalRef.current);
-    } else {
-      intervalRef.current = setInterval(() => {
-        setShowAfter(prev => !prev);
-      }, 2500);
+    if (!started || paused) {
+      clearTimeout(timerRef.current);
+      return;
     }
-    return () => clearInterval(intervalRef.current);
-  }, [paused]);
+    timerRef.current = setTimeout(() => {
+      setShowAfter(prev => !prev);
+    }, 4000);
+    return () => clearTimeout(timerRef.current);
+  }, [started, paused, showAfter]);
 
   return (
     <div
@@ -128,8 +122,9 @@ function BeforeAfterCard({ pair, delay = 0 }) {
         {!paused && (
           <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/20">
             <div
+              key={String(showAfter)}
               className="h-full bg-[#006C35] animate-progress"
-              style={{ animationDuration: '2.5s', animationDelay: `${delay}ms` }}
+              style={{ animationDuration: '4s' }}
             />
           </div>
         )}
@@ -171,7 +166,7 @@ export default function PhotoShowcase() {
         {/* Before / After Cards — auto-animate, staggered */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto mb-14">
           {PAIRS.map((pair, i) => (
-            <BeforeAfterCard key={i} pair={pair} delay={i * 400} />
+            <BeforeAfterCard key={i} pair={pair} initialDelay={i * 600} />
           ))}
         </div>
 
