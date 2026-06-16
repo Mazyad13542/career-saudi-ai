@@ -47,7 +47,7 @@ export default function Navbar() {
                 style={{ background: 'linear-gradient(135deg,#006C35,#00A651)', boxShadow: '0 4px 18px rgba(0,108,53,0.35)' }}
               >
                 <ShoppingCart size={15} />
-                اشترِ الخدمة — ١٩٩ ر.س
+                اشترِ الخدمة
               </a>
             )}
           </div>
@@ -117,7 +117,7 @@ export default function Navbar() {
                   style={{ background: 'linear-gradient(135deg,#006C35,#00A651)', boxShadow: '0 4px 18px rgba(0,108,53,0.35)' }}
                 >
                   <ShoppingCart size={16} />
-                  اشترِ الخدمة — ١٩٩ ر.س
+                  اشترِ الخدمة
                 </a>
               )}
             </div>

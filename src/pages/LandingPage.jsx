@@ -5,6 +5,7 @@ import SaudiMarket from '../components/landing/SaudiMarket';
 import Problem from '../components/landing/Problem';
 import Features from '../components/landing/Features';
 import HowItWorks from '../components/landing/HowItWorks';
+import PhotoShowcase from '../components/landing/PhotoShowcase';
 import Pricing from '../components/landing/Pricing';
 import Testimonials from '../components/landing/Testimonials';
 import FAQ from '../components/landing/FAQ';
@@ -18,6 +19,7 @@ export default function LandingPage() {
         <Hero />
         <SaudiMarket />
         <Features />
+        <PhotoShowcase />
         <Testimonials />
         <Pricing />
         <HowItWorks />
