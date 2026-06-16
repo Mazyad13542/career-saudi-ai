@@ -18,9 +18,9 @@ export default function LandingPage() {
       <main>
         <Hero />
         <Features />
+        <PhotoShowcase />
         <SaudiMarket />
         <Testimonials />
-        <PhotoShowcase />
         <Pricing />
         <HowItWorks />
         <Problem />
