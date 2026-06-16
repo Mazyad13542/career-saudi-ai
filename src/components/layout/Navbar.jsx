@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ShoppingCart } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 const navLinks = [
-  { label: 'الخدمات',  href: '#features'   },
-  { label: 'كيف نعمل', href: '#how-it-works' },
-  { label: 'التقييمات',href: '#testimonials' },
-  { label: 'السعر',    href: '#pricing'      },
+  { label: 'الخدمات',   href: '#features'     },
+  { label: 'كيف نعمل',  href: '#how-it-works'  },
+  { label: 'التقييمات', href: '#testimonials'  },
+  { label: 'السعر',     href: '#pricing'       },
 ];
 
 export default function Navbar() {
-  const [scrolled,    setScrolled]    = useState(false);
-  const [mobileOpen,  setMobileOpen]  = useState(false);
+  const { session } = useAuth();
+  const [scrolled,   setScrolled]   = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -28,16 +30,34 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-6">
 
-          {/* Buy CTA */}
-          <div className="hidden md:flex items-center">
-            <Link
-              to="/order"
-              className="flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-black text-white transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
-              style={{ background: 'linear-gradient(135deg,#006C35,#00A651)', boxShadow: '0 4px 18px rgba(0,108,53,0.35)' }}
-            >
-              <ShoppingCart size={15} />
-              اشترِ الخدمة
-            </Link>
+          {/* CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            {session ? (
+              <Link
+                to="/dashboard"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-black text-white transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
+                style={{ background: 'linear-gradient(135deg,#006C35,#00A651)', boxShadow: '0 4px 18px rgba(0,108,53,0.35)' }}
+              >
+                لوحة التحكم
+              </Link>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="px-4 py-2 text-sm font-bold text-gray-600 hover:text-gray-900 rounded-xl hover:bg-gray-100 transition"
+                >
+                  دخول
+                </Link>
+                <a
+                  href="#pricing"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-2xl text-sm font-black text-white transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
+                  style={{ background: 'linear-gradient(135deg,#006C35,#00A651)', boxShadow: '0 4px 18px rgba(0,108,53,0.35)' }}
+                >
+                  <ShoppingCart size={15} />
+                  اشترِ الخدمة — ١٩٩ ر.س
+                </a>
+              </>
+            )}
           </div>
 
           {/* Desktop nav links */}
@@ -87,16 +107,36 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-            <div className="pt-3">
-              <Link
-                to="/order"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl text-sm font-black text-white"
-                style={{ background: 'linear-gradient(135deg,#006C35,#00A651)', boxShadow: '0 4px 18px rgba(0,108,53,0.35)' }}
-              >
-                <ShoppingCart size={16} />
-                اشترِ الخدمة — ١٩٩ ر.س
-              </Link>
+            <div className="pt-3 flex flex-col gap-2">
+              {session ? (
+                <Link
+                  to="/dashboard"
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl text-sm font-black text-white"
+                  style={{ background: 'linear-gradient(135deg,#006C35,#00A651)', boxShadow: '0 4px 18px rgba(0,108,53,0.35)' }}
+                >
+                  لوحة التحكم
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="block text-center w-full py-3 rounded-xl text-sm font-bold text-gray-700 border border-gray-200 hover:bg-gray-50"
+                  >
+                    دخول
+                  </Link>
+                  <a
+                    href="#pricing"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl text-sm font-black text-white"
+                    style={{ background: 'linear-gradient(135deg,#006C35,#00A651)', boxShadow: '0 4px 18px rgba(0,108,53,0.35)' }}
+                  >
+                    <ShoppingCart size={16} />
+                    اشترِ الخدمة — ١٩٩ ر.س
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </div>

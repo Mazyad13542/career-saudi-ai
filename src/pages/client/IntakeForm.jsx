@@ -47,6 +47,7 @@ export default function IntakeForm() {
     // Step 1
     full_name: '',
     phone: '',
+    birth_date: '',
     region: '',
     city: '',
     // Step 2
@@ -54,6 +55,7 @@ export default function IntakeForm() {
     degree: '',
     major: '',
     graduation_year: '',
+    certificates: '',
     // Step 3
     experience_years: '',
     last_job_title: '',
@@ -64,6 +66,7 @@ export default function IntakeForm() {
     target_sector: '',
     // Step 4
     linkedin_url: '',
+    projects: '',
     additional_info: '',
   });
 
@@ -87,12 +90,14 @@ export default function IntakeForm() {
           user_id:          user.id,
           full_name:        formData.full_name,
           phone:            formData.phone,
+          birth_date:       formData.birth_date || null,
           region:           formData.region,
           city:             formData.city,
           university:       formData.university,
           degree:           formData.degree,
           major:            formData.major,
           graduation_year:  formData.graduation_year,
+          certificates:     formData.certificates,
           experience_years: formData.experience_years,
           last_job_title:   formData.last_job_title,
           last_company:     formData.last_company,
@@ -101,6 +106,7 @@ export default function IntakeForm() {
           target_job:       formData.target_job,
           target_sector:    formData.target_sector,
           linkedin_url:     formData.linkedin_url,
+          projects:         formData.projects,
           additional_info:  formData.additional_info,
           updated_at:       new Date().toISOString(),
         },
@@ -182,6 +188,15 @@ export default function IntakeForm() {
                   dir="ltr"
                 />
               </Field>
+              <Field label="تاريخ الميلاد">
+                <input
+                  type="date"
+                  value={formData.birth_date}
+                  onChange={(e) => set('birth_date', e.target.value)}
+                  className={inputCls}
+                  dir="ltr"
+                />
+              </Field>
               <Field label="المنطقة">
                 <select
                   value={formData.region}
@@ -251,6 +266,14 @@ export default function IntakeForm() {
                     <option key={y} value={y}>{y}</option>
                   ))}
                 </select>
+              </Field>
+              <Field label="الشهادات والدورات (اختياري)">
+                <textarea
+                  value={formData.certificates}
+                  onChange={(e) => set('certificates', e.target.value)}
+                  className={`${inputCls} min-h-[90px] resize-none`}
+                  placeholder="مثال: شهادة PMP، دورة في تحليل البيانات من Coursera، AWS Cloud Practitioner..."
+                />
               </Field>
             </>
           )}
@@ -340,29 +363,49 @@ export default function IntakeForm() {
           {step === 4 && (
             <>
               <h2 className="font-black text-gray-900 text-base mb-2">معلومات إضافية</h2>
+
+              {/* Photo note */}
+              <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-3">
+                <span className="text-xl flex-shrink-0">📸</span>
+                <div>
+                  <p className="text-sm font-black text-amber-800 mb-1">صورتك الشخصية</p>
+                  <p className="text-xs text-amber-700 leading-relaxed">
+                    بعد إرسال المعلومات، أرسل صورتك الشخصية مباشرة على واتساب حتى نُنقّحها لك باحترافية.
+                  </p>
+                </div>
+              </div>
+
               <Field label="رابط LinkedIn الحالي (اختياري)">
                 <input
                   type="text"
                   value={formData.linkedin_url}
                   onChange={(e) => set('linkedin_url', e.target.value)}
                   className={inputCls}
-                  placeholder="رابط LinkedIn الحالي إن وجد"
+                  placeholder="https://linkedin.com/in/..."
                   dir="ltr"
+                />
+              </Field>
+              <Field label="أعمالك ومشاريعك (اختياري)">
+                <textarea
+                  value={formData.projects}
+                  onChange={(e) => set('projects', e.target.value)}
+                  className={`${inputCls} min-h-[90px] resize-none`}
+                  placeholder="اذكر أبرز أعمالك ومشاريعك التي تريد إضافتها لموقعك الشخصي"
                 />
               </Field>
               <Field label="معلومات إضافية (اختياري)">
                 <textarea
                   value={formData.additional_info}
                   onChange={(e) => set('additional_info', e.target.value)}
-                  className={`${inputCls} min-h-[100px] resize-none`}
-                  placeholder="أي معلومات إضافية تريد إضافتها"
+                  className={`${inputCls} min-h-[80px] resize-none`}
+                  placeholder="أي معلومات أخرى تريد إضافتها"
                 />
               </Field>
-              {/* WhatsApp note */}
+              {/* WhatsApp delivery note */}
               <div className="p-4 bg-[#006C35]/5 border border-[#006C35]/15 rounded-xl flex items-start gap-3">
                 <span className="text-lg flex-shrink-0">📱</span>
                 <p className="text-xs text-[#006C35] font-bold leading-relaxed">
-                  سيتم التواصل معك على رقم الجوال المُدخل في الخطوة الأولى عبر واتساب.
+                  ستصلك جميع خدماتك الست على واتساب خلال <span className="underline">٨ ساعات عمل</span> من تأكيد استلام معلوماتك.
                 </p>
               </div>
             </>
