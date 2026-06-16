@@ -124,7 +124,7 @@ export default function IntakeForm() {
             <CheckCircle size={56} className="text-[#006C35] mx-auto mb-5" />
             <h2 className="text-xl font-black text-gray-900 mb-3">تم إرسال معلوماتك بنجاح!</h2>
             <p className="text-gray-500 text-sm leading-relaxed">
-              سنتواصل معك خلال <span className="font-black text-[#006C35]">٧٢ ساعة</span> على واتساب بجميع خدماتك جاهزة.
+              سنتواصل معك خلال <span className="font-black text-[#006C35]">٨ ساعات</span> على واتساب بجميع خدماتك جاهزة.
             </p>
           </div>
         </div>

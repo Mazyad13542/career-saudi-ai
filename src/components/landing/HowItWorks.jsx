@@ -21,9 +21,9 @@ const steps = [
     step: '٠٣',
     icon: Phone,
     title: 'استلم كل شيء على واتساب',
-    description: 'بعد إنجاز جميع الخدمات، نُرسل لك كل شيء على رقم واتساب الخاص بك خلال ٧٢ ساعة.',
+    description: 'بعد إنجاز جميع الخدمات، نُرسل لك كل شيء على رقم واتساب الخاص بك خلال ٨ ساعات.',
     color: '#1A56DB',
-    features: ['واتساب مباشر', 'ملفات جاهزة', 'خلال ٧٢ ساعة'],
+    features: ['واتساب مباشر', 'ملفات جاهزة', 'خلال ٨ ساعات'],
   },
 ];
 
@@ -90,7 +90,7 @@ export default function HowItWorks() {
 
         {/* Guarantee */}
         <div className="mt-16 p-8 rounded-3xl bg-white border border-gray-100 shadow-sm text-center">
-          <p className="text-2xl font-black text-gray-900">🚀 الإنجاز خلال ٧٢ ساعة — كل خدماتك تصلك على واتساب</p>
+          <p className="text-2xl font-black text-gray-900">🚀 الإنجاز خلال ٨ ساعات — كل خدماتك تصلك على واتساب</p>
         </div>
       </div>
     </section>

@@ -43,7 +43,7 @@ export default function Overview() {
             أهلاً، {firstName} 👋
           </h1>
           <p className="text-gray-500 text-sm">
-            مرحباً بك في قِمّة — نُجهِّز لك حضورك المهني الكامل خلال ٧٢ ساعة.
+            مرحباً بك في قِمّة — نُجهِّز لك حضورك المهني الكامل خلال ٨ ساعات.
           </p>
         </div>
 
@@ -71,7 +71,7 @@ export default function Overview() {
                 <div className="flex-1">
                   <p className="font-black text-[#006C35] text-sm">تم استلام طلبك ✅</p>
                   <p className="text-xs text-green-700 mt-0.5">
-                    سنتواصل معك على واتساب خلال ٧٢ ساعة
+                    سنتواصل معك على واتساب خلال ٨ ساعات
                   </p>
                 </div>
               </div>
@@ -109,7 +109,7 @@ export default function Overview() {
         {!loadingIntake && !intakeRecord && (
           <div className="mt-5 p-4 bg-[#006C35]/5 border border-[#006C35]/15 rounded-2xl text-center">
             <p className="text-xs text-[#006C35] font-bold leading-relaxed">
-              بعد إرسال المعلومات، سنبدأ فوراً في تجهيز جميع خدماتك الست وإرسالها على واتساب خلال ٧٢ ساعة.
+              بعد إرسال المعلومات، سنبدأ فوراً في تجهيز جميع خدماتك الست وإرسالها على واتساب خلال ٨ ساعات.
             </p>
           </div>
         )}
