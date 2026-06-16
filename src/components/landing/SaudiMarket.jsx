@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { TrendingUp, Eye, Users, Award } from 'lucide-react';
+import { CheckCircle, FileText, Zap, ShieldCheck } from 'lucide-react';
 
 const COMPANIES = [
   'أرامكو السعودية',
@@ -14,99 +14,6 @@ const COMPANIES = [
   'الاتحاد للاتصالات',
 ];
 
-const LINKEDIN_BEFORE = {
-  name: 'محمد الغامدي',
-  title: 'مهندس برمجيات',
-  connections: '٨٧',
-  views: '١٢',
-  appearance: '٣',
-  photo: null,
-};
-
-const LINKEDIN_AFTER = {
-  name: 'محمد الغامدي',
-  title: 'Senior Software Engineer | Full‑Stack Developer',
-  connections: '٥٠٠+',
-  views: '١,٢٠٠',
-  appearance: '٣٤',
-  badge: 'مفتوح للعمل',
-  photo: null,
-};
-
-function AvatarPlaceholder({ size = 14, after = false }) {
-  return (
-    <div
-      className={`rounded-full flex items-center justify-center font-black text-white flex-shrink-0 ${after ? 'bg-[#006C35]' : 'bg-gray-300'}`}
-      style={{ width: size * 4, height: size * 4, fontSize: size }}
-    >
-      م
-    </div>
-  );
-}
-
-function LinkedInCard({ data, label, isAfter }) {
-  return (
-    <div className={`relative rounded-2xl border bg-white p-5 shadow-md w-full max-w-[260px] ${isAfter ? 'border-[#006C35]/30 shadow-[0_4px_24px_rgba(0,108,53,0.15)]' : 'border-gray-200'}`}>
-      {isAfter && (
-        <div className="absolute -top-3 right-4 bg-[#006C35] text-white text-[10px] font-black px-3 py-0.5 rounded-full">
-          بعد قِمّة ✨
-        </div>
-      )}
-      {!isAfter && (
-        <div className="absolute -top-3 right-4 bg-gray-400 text-white text-[10px] font-black px-3 py-0.5 rounded-full">
-          قبل قِمّة
-        </div>
-      )}
-
-      {/* LI-style cover */}
-      <div className={`h-12 rounded-xl mb-0 -mx-5 -mt-5 ${isAfter ? 'bg-gradient-to-l from-[#006C35] to-[#00A651]' : 'bg-gray-100'}`} />
-
-      {/* Avatar */}
-      <div className="flex items-end gap-3 -mt-6 mb-3">
-        <div className={`w-14 h-14 rounded-full border-[3px] ${isAfter ? 'border-white bg-[#006C35]' : 'border-white bg-gray-200'} flex items-center justify-center text-xl font-black ${isAfter ? 'text-white' : 'text-gray-400'} shadow-sm`}>
-          م
-        </div>
-        {isAfter && (
-          <span className="mb-1 text-[9px] font-black px-2 py-0.5 bg-[#006C35]/10 border border-[#006C35]/25 text-[#006C35] rounded-full">
-            {data.badge}
-          </span>
-        )}
-      </div>
-
-      {/* Info */}
-      <p className="font-black text-gray-900 text-sm leading-tight mb-0.5">{data.name}</p>
-      <p className={`text-[11px] leading-tight mb-3 ${isAfter ? 'text-gray-600 font-semibold' : 'text-gray-400'}`}>{data.title}</p>
-
-      {/* Stats */}
-      <div className={`grid grid-cols-3 gap-1 p-2.5 rounded-xl ${isAfter ? 'bg-[#006C35]/5 border border-[#006C35]/10' : 'bg-gray-50'}`}>
-        <div className="text-center">
-          <p className={`text-xs font-black ${isAfter ? 'text-[#006C35]' : 'text-gray-500'}`}>{data.connections}</p>
-          <p className="text-[9px] text-gray-400">اتصال</p>
-        </div>
-        <div className="text-center border-x border-gray-100">
-          <p className={`text-xs font-black ${isAfter ? 'text-[#006C35]' : 'text-gray-500'}`}>{data.views}</p>
-          <p className="text-[9px] text-gray-400">مشاهدة</p>
-        </div>
-        <div className="text-center">
-          <p className={`text-xs font-black ${isAfter ? 'text-[#006C35]' : 'text-gray-500'}`}>{data.appearance}</p>
-          <p className="text-[9px] text-gray-400">ظهور</p>
-        </div>
-      </div>
-
-      {/* LI action (after only) */}
-      {isAfter && (
-        <div className="mt-3 flex gap-1.5">
-          <div className="flex-1 h-7 rounded-full bg-[#006C35] flex items-center justify-center">
-            <span className="text-white text-[10px] font-black">تواصل</span>
-          </div>
-          <div className="flex-1 h-7 rounded-full border border-[#006C35] flex items-center justify-center">
-            <span className="text-[#006C35] text-[10px] font-black">رسالة</span>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function SaudiMarket() {
   return (
@@ -152,8 +59,8 @@ export default function SaudiMarket() {
         </div>
       </motion.div>
 
-      {/* ── LinkedIn Before / After ──────────────────────────── */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ── CV Design Showcase ──────────────────────────── */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <motion.div
           className="text-center mb-14"
           initial={{ opacity: 0, y: 24 }}
@@ -161,86 +68,169 @@ export default function SaudiMarket() {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-100 rounded-full mb-5">
-            {/* LinkedIn "in" logo */}
-            <svg viewBox="0 0 24 24" className="w-4 h-4 fill-[#0077B5]">
-              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-            </svg>
-            <span className="text-xs font-bold text-blue-700">LinkedIn — قبل وبعد قِمّة</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#006C35]/8 border border-[#006C35]/15 rounded-full mb-5">
+            <FileText size={13} className="text-[#006C35]" />
+            <span className="text-xs font-bold text-[#006C35]">سيرة ذاتية احترافية</span>
           </div>
-
           <h2 className="arabic-heading text-3xl sm:text-4xl lg:text-5xl text-gray-900 mb-4">
-            ملفك على LinkedIn{' '}
-            <span className="text-gradient-saudi">يتكلّم عنك</span>
+            سيرة ذاتية تتجاوز{' '}
+            <span className="text-gradient-green">فلاتر ATS</span>
           </h2>
           <p className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed">
-            نُحوِّل ملفك من مجرد سيرة ذاتية رقمية إلى مغناطيس يجذب مسؤولي التوظيف في السعودية تلقائياً.
+            نصمم سيرتك الذاتية بأحدث المعايير التي تخترق أنظمة الفلترة التلقائية وتصل مباشرة إلى مسؤول التوظيف.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
 
-          {/* Cards comparison */}
+          {/* CV Mockup */}
           <motion.div
-            className="flex items-center justify-center gap-4 sm:gap-8"
+            className="relative"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55 }}
           >
-            <LinkedInCard data={LINKEDIN_BEFORE} label="قبل" isAfter={false} />
-
-            {/* Arrow */}
-            <div className="flex flex-col items-center gap-1 flex-shrink-0">
-              <div className="w-10 h-10 rounded-full bg-[#006C35]/10 flex items-center justify-center">
-                <span className="text-[#006C35] text-lg font-black">←</span>
+            {/* ATS Score Badge */}
+            <div className="absolute -top-4 -left-4 z-10 bg-white border border-[#C8A951]/30 rounded-2xl px-4 py-3 shadow-xl">
+              <p className="text-[10px] text-gray-400 font-bold mb-0.5">ATS Score</p>
+              <div className="flex items-end gap-1">
+                <span className="text-2xl font-black text-[#006C35]">٩٧</span>
+                <span className="text-sm font-black text-[#C8A951] mb-0.5">/ ١٠٠</span>
               </div>
-              <span className="text-[10px] text-gray-400 font-bold whitespace-nowrap">٨ ساعات</span>
             </div>
 
-            <LinkedInCard data={LINKEDIN_AFTER} label="بعد" isAfter={true} />
+            {/* CV Document */}
+            <div className="bg-white rounded-3xl border border-gray-200 shadow-2xl shadow-gray-200/60 overflow-hidden" dir="rtl">
+              {/* Header strip */}
+              <div className="bg-gradient-to-l from-gray-900 to-gray-800 px-6 py-5">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-full bg-gradient-to-b from-[#006C35] to-[#00A651] flex items-center justify-center text-xl font-black text-white shadow-lg flex-shrink-0">
+                    ع
+                  </div>
+                  <div>
+                    <p className="text-white font-black text-base">عبدالرحمن محمد السهلي</p>
+                    <p className="text-gray-300 text-xs mt-0.5">مدير مشاريع تقنية المعلومات · PMP Certified</p>
+                    <div className="flex gap-2 mt-1.5">
+                      <span className="text-[9px] text-gray-400">الرياض</span>
+                      <span className="text-gray-600">·</span>
+                      <span className="text-[9px] text-gray-400 latin" dir="ltr">linkedin.com/in/alsuhli</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Body */}
+              <div className="p-5 space-y-4">
+                {/* Summary */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-px flex-1 bg-gray-100" />
+                    <p className="text-[9px] font-black text-[#006C35] uppercase tracking-widest">الملخص المهني</p>
+                    <div className="h-px flex-1 bg-gray-100" />
+                  </div>
+                  <div className="space-y-1">
+                    <div className="h-2 bg-gray-100 rounded-full w-full" />
+                    <div className="h-2 bg-gray-100 rounded-full w-4/5" />
+                    <div className="h-2 bg-gray-100 rounded-full w-3/4" />
+                  </div>
+                </div>
+
+                {/* Experience */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-px flex-1 bg-gray-100" />
+                    <p className="text-[9px] font-black text-[#006C35] uppercase tracking-widest">الخبرات</p>
+                    <div className="h-px flex-1 bg-gray-100" />
+                  </div>
+                  {[
+                    { role: 'مدير مشاريع أول', co: 'أرامكو السعودية', yrs: '٢٠٢٠ – الآن', dots: ['w-full','w-4/5','w-3/5'] },
+                    { role: 'مدير مشاريع', co: 'شركة STC', yrs: '٢٠١٧ – ٢٠٢٠', dots: ['w-4/5','w-3/4'] },
+                  ].map(e => (
+                    <div key={e.co} className="mb-3">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-[9px] text-gray-400 latin">{e.yrs}</span>
+                        <div>
+                          <p className="text-[11px] font-black text-gray-800 text-right">{e.role}</p>
+                          <p className="text-[9px] text-[#006C35] font-bold text-right">{e.co}</p>
+                        </div>
+                      </div>
+                      <div className="space-y-1 pr-1">
+                        {e.dots.map((w, i) => <div key={i} className={`h-1.5 bg-gray-100 rounded-full ${w}`} />)}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Skills */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="h-px flex-1 bg-gray-100" />
+                    <p className="text-[9px] font-black text-[#006C35] uppercase tracking-widest">المهارات</p>
+                    <div className="h-px flex-1 bg-gray-100" />
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {['Project Management','Agile / Scrum','MS Project','Risk Management','PMP','ITIL','Leadership'].map(sk => (
+                      <span key={sk} className="px-2 py-0.5 bg-[#006C35]/8 text-[#006C35] text-[8px] font-bold rounded-full latin">{sk}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer badge */}
+              <div className="px-5 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-4 h-4 rounded gradient-saudi flex items-center justify-center">
+                    <span className="text-white text-[8px] font-black">ق</span>
+                  </div>
+                  <span className="text-[9px] font-black text-[#006C35]">صُمِّمت بواسطة قِمّة</span>
+                </div>
+                <span className="text-[9px] text-gray-400 font-bold">ATS Ready ✓</span>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Stats list */}
+          {/* Features list */}
           <motion.div
-            className="space-y-5"
+            className="space-y-4"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.1 }}
           >
-            <h3 className="text-2xl font-black text-gray-900 text-right mb-6">
-              ما الذي يتغيّر بعد تحسين LinkedIn؟
+            <h3 className="text-2xl font-black text-gray-900 mb-6">
+              لماذا سيرتك من قِمّة تختلف؟
             </h3>
 
             {[
-              { icon: Eye,       color: 'bg-blue-50 text-blue-600',   stat: '١٠٠×',   label: 'زيادة في مشاهدات ملفك' },
-              { icon: Users,     color: 'bg-[#006C35]/10 text-[#006C35]', stat: '٥٠٠+', label: 'اتصالات مع مسؤولي التوظيف' },
-              { icon: TrendingUp,color: 'bg-amber-50 text-amber-600',  stat: '٣٠+',   label: 'طلب تواصل أسبوعياً من شركات كبرى' },
-              { icon: Award,     color: 'bg-purple-50 text-purple-600',stat: '#١',    label: 'ظهور في نتائج البحث لمسؤولي التوظيف' },
+              { icon: Zap,         color: 'bg-[#C8A951]/10 text-[#C8A951]',      title: 'تتجاوز أنظمة ATS تلقائياً',         desc: 'نستخدم أحدث معايير ATS 2024 — الكلمات المفتاحية، الهيكل، والتنسيق الصحيح.' },
+              { icon: ShieldCheck, color: 'bg-[#006C35]/10 text-[#006C35]',      title: 'معدل قبول ٩٧٪',                      desc: 'سيرتنا تصل لمسؤول التوظيف بدل ما تحذفها الأنظمة التلقائية قبل ما يشوفها أحد.' },
+              { icon: FileText,    color: 'bg-blue-50 text-blue-600',             title: 'تصميم يلفت الانتباه',                desc: 'تصميم عصري واحترافي يجعل سيرتك تبرز من بين مئات الطلبات.' },
+              { icon: CheckCircle, color: 'bg-purple-50 text-purple-600',         title: 'عربي وإنجليزي في نسخة واحدة',        desc: 'نصيغ محتواك بالعربية والإنجليزية مع مراجعة لغوية كاملة.' },
             ].map((item) => (
-              <div key={item.label} className="flex items-center gap-4 p-4 rounded-2xl border border-gray-100 bg-white hover:shadow-md transition-shadow duration-200">
+              <div key={item.title} className="flex gap-4 p-4 rounded-2xl border border-gray-100 bg-white hover:shadow-md hover:border-gray-200 transition-all duration-200">
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 ${item.color}`}>
+                  <item.icon size={19} />
+                </div>
                 <div className="text-right flex-1">
-                  <p className="text-sm text-gray-600 font-bold">{item.label}</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xl font-black text-[#006C35] tabular-nums">{item.stat}</p>
-                </div>
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${item.color}`}>
-                  <item.icon size={18} />
+                  <p className="font-black text-gray-900 text-sm mb-0.5">{item.title}</p>
+                  <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
                 </div>
               </div>
             ))}
 
-            {/* Vision 2030 note */}
-            <div className="flex items-center gap-3 p-4 bg-gradient-to-l from-[#006C35]/5 to-transparent border border-[#006C35]/15 rounded-2xl mt-4">
-              <span className="text-3xl">🇸🇦</span>
-              <div className="text-right">
-                <p className="text-sm font-black text-[#006C35]">متوافق مع رؤية ٢٠٣٠</p>
-                <p className="text-xs text-gray-500 leading-relaxed">
-                  ندعم توطين الوظائف ونساعد الكفاءات السعودية على الوصول لأفضل الفرص
-                </p>
-              </div>
+            {/* Stats row */}
+            <div className="grid grid-cols-3 gap-3 pt-2">
+              {[
+                { num: '٩٧٪', label: 'نسبة اجتياز ATS' },
+                { num: '+٣٢٠٠', label: 'سيرة سُلِّمت' },
+                { num: '٨ ساعات', label: 'وقت التسليم' },
+              ].map(s => (
+                <div key={s.label} className="text-center p-3 bg-gray-50 rounded-2xl">
+                  <p className="text-lg font-black text-[#006C35]">{s.num}</p>
+                  <p className="text-[9px] text-gray-500 font-bold mt-0.5">{s.label}</p>
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>
