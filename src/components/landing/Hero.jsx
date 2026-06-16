@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Sparkles, FileText, Globe, Building2, MessageSquare, User2, Linkedin } from 'lucide-react';
+import { ArrowLeft, Sparkles, FileText, Globe, Building2, MessageSquare, User2, Link2 } from 'lucide-react';
 import Button from '../ui/Button';
 import { useAuth } from '../../context/AuthContext';
 
@@ -12,7 +12,7 @@ const STATS = [
 ];
 
 const SERVICES = [
-  { icon: Linkedin,      label: 'LinkedIn',           color: 'bg-blue-50 text-blue-600' },
+  { icon: Link2,      label: 'LinkedIn',           color: 'bg-blue-50 text-blue-600' },
   { icon: Globe,         label: 'الموقع الشخصي',      color: 'bg-purple-50 text-purple-600' },
   { icon: User2,         label: 'صورة احترافية',       color: 'bg-rose-50 text-rose-600' },
   { icon: FileText,      label: 'سيرة ذاتية',          color: 'bg-[#006C35]/10 text-[#006C35]' },
