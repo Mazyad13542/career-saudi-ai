@@ -5,13 +5,21 @@ const PAIRS = [
   {
     before: '/IMG_2470.JPG',
     after:  '/7B792D5E-3730-468B-8DB3-4449AF574B4D.PNG',
-    name:   'عبدالرحمن',
     result: 'صورة احترافية للـ LinkedIn',
   },
   {
     before: '/IMG_2465.JPG',
     after:  '/9F677A53-0C27-402E-BE54-3B6B7F26C6E9.PNG',
-    name:   'فهد',
+    result: 'صورة احترافية للـ CV',
+  },
+  {
+    before: '/IMG_2467.JPG',
+    after:  '/779E47C6-4708-4A2F-86A3-7947037DFB25.PNG',
+    result: 'صورة احترافية للـ LinkedIn',
+  },
+  {
+    before: '/IMG_2469.JPG',
+    after:  '/99C0FD2C-B481-42CB-BBDA-08BC8BED932E.PNG',
     result: 'صورة احترافية للـ CV',
   },
 ];
@@ -121,7 +129,7 @@ export default function PhotoShowcase() {
         </div>
 
         {/* Before / After Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-14">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-5xl mx-auto mb-14">
           {PAIRS.map((pair, i) => (
             <BeforeAfterCard key={i} pair={pair} />
           ))}
