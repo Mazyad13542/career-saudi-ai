@@ -292,3 +292,23 @@ CREATE POLICY "Admins view all intakes" ON public.client_intake
   FOR ALL USING (
     EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
   );
+
+-- ── COMPANY APPLICATIONS ─────────────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS public.company_applications (
+  id              UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  client_intake_id UUID REFERENCES public.client_intake(id) ON DELETE CASCADE,
+  user_id         UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+  company_name    TEXT NOT NULL,
+  company_email   TEXT NOT NULL,
+  company_sector  TEXT,
+  email_subject   TEXT,
+  status          TEXT DEFAULT 'sent' CHECK (status IN ('sent','failed','replied')),
+  sent_at         TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.company_applications ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Admins manage applications" ON public.company_applications
+  FOR ALL USING (
+    EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role = 'admin')
+  );

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
   Loader2, Copy, ChevronDown, ChevronUp,
-  Phone, MapPin, GraduationCap, Briefcase, User,
+  Phone, MapPin, GraduationCap, Briefcase, User, Send,
 } from 'lucide-react';
 import DashboardLayout from '../../components/layout/DashboardLayout';
 import { supabase } from '../../lib/supabase';
+import SendApplicationsModal from '../../components/admin/SendApplicationsModal';
 
 const STATUS_OPTIONS = [
   { value: 'new',         label: 'جديد',          emoji: '🟡' },
@@ -76,7 +77,7 @@ function buildCopyText(order) {
   return lines.join('\n');
 }
 
-function OrderCard({ order, onStatusChange }) {
+function OrderCard({ order, onStatusChange, onSendApplications }) {
   const [expanded, setExpanded] = useState(false);
   const [status, setStatus]     = useState(order.status || 'new');
   const [copying, setCopying]   = useState(false);
@@ -184,13 +185,22 @@ function OrderCard({ order, onStatusChange }) {
             </Section>
           )}
 
-          <button
-            onClick={handleCopy}
-            className="mt-5 flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 text-xs font-bold text-gray-600 hover:bg-gray-50 transition"
-          >
-            <Copy size={14} />
-            {copying ? 'تم النسخ ✓' : 'نسخ كل المعلومات'}
-          </button>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 text-xs font-bold text-gray-600 hover:bg-gray-50 transition"
+            >
+              <Copy size={14} />
+              {copying ? 'تم النسخ ✓' : 'نسخ كل المعلومات'}
+            </button>
+            <button
+              onClick={() => onSendApplications?.(order)}
+              className="flex items-center gap-2 px-4 py-2 bg-[#006C35] text-white rounded-xl text-xs font-bold hover:bg-[#005528] transition-colors"
+            >
+              <Send size={14} />
+              تقديم على ٢٠٠ شركة
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -200,6 +210,7 @@ function OrderCard({ order, onStatusChange }) {
 export default function AdminOrders() {
   const [orders, setOrders]   = useState([]);
   const [loading, setLoading] = useState(true);
+  const [appModal, setAppModal] = useState({ open: false, client: null });
 
   useEffect(() => {
     supabase
@@ -244,10 +255,16 @@ export default function AdminOrders() {
               key={order.id}
               order={order}
               onStatusChange={handleStatusChange}
+              onSendApplications={(client) => setAppModal({ open: true, client })}
             />
           ))}
         </div>
       )}
+      <SendApplicationsModal
+        isOpen={appModal.open}
+        onClose={() => setAppModal({ open: false, client: null })}
+        clientInfo={appModal.client}
+      />
     </DashboardLayout>
   );
 }
