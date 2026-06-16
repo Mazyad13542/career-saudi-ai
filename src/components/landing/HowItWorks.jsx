@@ -90,7 +90,7 @@ export default function HowItWorks() {
 
         {/* Guarantee */}
         <div className="mt-16 p-8 rounded-3xl bg-white border border-gray-100 shadow-sm text-center">
-          <p className="text-2xl font-black text-gray-900">🚀 الإنجاز خلال ٧٢ ساعة — كل خدماتك تصلك على واتساب</p>
+          <p className="text-2xl font-black text-gray-900">🚀 الإنجاز خلال <span className="text-[#006C35]">٨ ساعات عمل</span> — كل خدماتك تصلك على واتساب</p>
         </div>
       </div>
     </section>

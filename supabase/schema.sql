@@ -272,6 +272,7 @@ CREATE TABLE IF NOT EXISTS public.client_intake (
   target_sector    TEXT,
   -- Additional
   linkedin_url     TEXT,
+  projects         TEXT,
   additional_info  TEXT,
   -- Admin
   status           TEXT DEFAULT 'new' CHECK (status IN ('new','in_progress','completed','delivered')),

@@ -64,6 +64,7 @@ export default function IntakeForm() {
     target_sector: '',
     // Step 4
     linkedin_url: '',
+    projects: '',
     additional_info: '',
   });
 
@@ -101,6 +102,7 @@ export default function IntakeForm() {
           target_job:       formData.target_job,
           target_sector:    formData.target_sector,
           linkedin_url:     formData.linkedin_url,
+          projects:         formData.projects,
           additional_info:  formData.additional_info,
           updated_at:       new Date().toISOString(),
         },
@@ -124,7 +126,7 @@ export default function IntakeForm() {
             <CheckCircle size={56} className="text-[#006C35] mx-auto mb-5" />
             <h2 className="text-xl font-black text-gray-900 mb-3">تم إرسال معلوماتك بنجاح!</h2>
             <p className="text-gray-500 text-sm leading-relaxed">
-              سنتواصل معك خلال <span className="font-black text-[#006C35]">٧٢ ساعة</span> على واتساب بجميع خدماتك جاهزة.
+              ستصلك جميع خدماتك الست على واتساب خلال <span className="font-black text-[#006C35]">٨ ساعات عمل</span>.
             </p>
           </div>
         </div>
@@ -340,29 +342,49 @@ export default function IntakeForm() {
           {step === 4 && (
             <>
               <h2 className="font-black text-gray-900 text-base mb-2">معلومات إضافية</h2>
+
+              {/* Photo note */}
+              <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl flex items-start gap-3">
+                <span className="text-xl flex-shrink-0">📸</span>
+                <div>
+                  <p className="text-sm font-black text-amber-800 mb-1">صورتك الشخصية</p>
+                  <p className="text-xs text-amber-700 leading-relaxed">
+                    بعد إرسال المعلومات، أرسل صورتك الشخصية مباشرة على واتساب حتى نُنقّحها لك باحترافية.
+                  </p>
+                </div>
+              </div>
+
               <Field label="رابط LinkedIn الحالي (اختياري)">
                 <input
                   type="text"
                   value={formData.linkedin_url}
                   onChange={(e) => set('linkedin_url', e.target.value)}
                   className={inputCls}
-                  placeholder="رابط LinkedIn الحالي إن وجد"
+                  placeholder="https://linkedin.com/in/..."
                   dir="ltr"
+                />
+              </Field>
+              <Field label="أعمالك ومشاريعك (اختياري)">
+                <textarea
+                  value={formData.projects}
+                  onChange={(e) => set('projects', e.target.value)}
+                  className={`${inputCls} min-h-[90px] resize-none`}
+                  placeholder="اذكر أبرز أعمالك ومشاريعك التي تريد إضافتها لموقعك الشخصي"
                 />
               </Field>
               <Field label="معلومات إضافية (اختياري)">
                 <textarea
                   value={formData.additional_info}
                   onChange={(e) => set('additional_info', e.target.value)}
-                  className={`${inputCls} min-h-[100px] resize-none`}
-                  placeholder="أي معلومات إضافية تريد إضافتها"
+                  className={`${inputCls} min-h-[80px] resize-none`}
+                  placeholder="أي معلومات أخرى تريد إضافتها"
                 />
               </Field>
-              {/* WhatsApp note */}
+              {/* WhatsApp delivery note */}
               <div className="p-4 bg-[#006C35]/5 border border-[#006C35]/15 rounded-xl flex items-start gap-3">
                 <span className="text-lg flex-shrink-0">📱</span>
                 <p className="text-xs text-[#006C35] font-bold leading-relaxed">
-                  سيتم التواصل معك على رقم الجوال المُدخل في الخطوة الأولى عبر واتساب.
+                  ستصلك جميع خدماتك الست على واتساب خلال <span className="underline">٨ ساعات عمل</span> من تأكيد استلام معلوماتك.
                 </p>
               </div>
             </>
