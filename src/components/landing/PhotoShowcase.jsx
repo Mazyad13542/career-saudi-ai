@@ -3,14 +3,14 @@ import { Camera, Star, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const PAIRS = [
   {
-    before: '/photos/before-1.jpg',
-    after:  '/photos/after-1.jpg',
+    before: '/IMG_2470.JPG',
+    after:  '/7B792D5E-3730-468B-8DB3-4449AF574B4D.PNG',
     name:   'عبدالرحمن',
     result: 'صورة احترافية للـ LinkedIn',
   },
   {
-    before: '/photos/before-2.jpg',
-    after:  '/photos/after-2.jpg',
+    before: '/IMG_2465.JPG',
+    after:  '/9F677A53-0C27-402E-BE54-3B6B7F26C6E9.PNG',
     name:   'فهد',
     result: 'صورة احترافية للـ CV',
   },
