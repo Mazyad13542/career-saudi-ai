@@ -17,11 +17,11 @@ export default function LandingPage() {
       <Navbar />
       <main>
         <Hero />
+        <Features />
         <SaudiMarket />
         <Testimonials />
-        <Features />
-        <Pricing />
         <PhotoShowcase />
+        <Pricing />
         <HowItWorks />
         <Problem />
         <FAQ />
