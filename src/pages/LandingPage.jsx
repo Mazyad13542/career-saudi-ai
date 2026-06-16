@@ -18,10 +18,10 @@ export default function LandingPage() {
       <main>
         <Hero />
         <SaudiMarket />
-        <Features />
         <Testimonials />
-        <PhotoShowcase />
+        <Features />
         <Pricing />
+        <PhotoShowcase />
         <HowItWorks />
         <Problem />
         <FAQ />
