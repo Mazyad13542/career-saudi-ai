@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Camera, Star, ArrowLeft, ArrowRight } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Camera, Star, ArrowLeft } from 'lucide-react';
 
 const PAIRS = [
   {
@@ -51,13 +51,44 @@ function Placeholder({ label, isAfter }) {
   );
 }
 
-function BeforeAfterCard({ pair }) {
+function BeforeAfterCard({ pair, delay = 0 }) {
   const [showAfter, setShowAfter] = useState(false);
   const [beforeLoaded, setBeforeLoaded] = useState(false);
   const [afterLoaded, setAfterLoaded]   = useState(false);
+  const [paused, setPaused] = useState(false);
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    const start = setTimeout(() => {
+      intervalRef.current = setInterval(() => {
+        if (!paused) setShowAfter(prev => !prev);
+      }, 2500);
+    }, delay);
+
+    return () => {
+      clearTimeout(start);
+      clearInterval(intervalRef.current);
+    };
+  }, [delay]);
+
+  useEffect(() => {
+    if (paused) {
+      clearInterval(intervalRef.current);
+    } else {
+      intervalRef.current = setInterval(() => {
+        setShowAfter(prev => !prev);
+      }, 2500);
+    }
+    return () => clearInterval(intervalRef.current);
+  }, [paused]);
 
   return (
-    <div className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-shadow duration-300">
+    <div
+      className="bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onClick={() => setShowAfter(prev => !prev)}
+    >
       {/* Image area */}
       <div className="relative aspect-[4/5] overflow-hidden bg-gray-100">
         {/* Before */}
@@ -66,7 +97,7 @@ function BeforeAfterCard({ pair }) {
           src={pair.before}
           alt="قبل"
           onLoad={() => setBeforeLoaded(true)}
-          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${showAfter ? 'opacity-0' : beforeLoaded ? 'opacity-100' : 'opacity-0'}`}
+          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ${showAfter ? 'opacity-0' : beforeLoaded ? 'opacity-100' : 'opacity-0'}`}
         />
         {/* After */}
         {!afterLoaded && showAfter && <Placeholder label="الصورة الاحترافية النهائية" isAfter={true} />}
@@ -74,40 +105,39 @@ function BeforeAfterCard({ pair }) {
           src={pair.after}
           alt="بعد"
           onLoad={() => setAfterLoaded(true)}
-          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${showAfter ? afterLoaded ? 'opacity-100' : 'opacity-0' : 'opacity-0'}`}
+          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ${showAfter ? afterLoaded ? 'opacity-100' : 'opacity-0' : 'opacity-0'}`}
         />
 
         {/* Label badge */}
-        <div className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-black shadow-sm transition-all duration-300 ${
+        <div className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-black shadow-sm transition-all duration-500 ${
           showAfter
             ? 'bg-[#006C35] text-white'
             : 'bg-gray-800/70 text-white backdrop-blur-sm'
         }`}>
           {showAfter ? '✨ بعد' : '📸 قبل'}
         </div>
+
+        {/* Pause indicator on hover */}
+        {paused && (
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-black/50 text-white text-[10px] font-bold backdrop-blur-sm">
+            {showAfter ? 'بعد ✨' : 'قبل 📸'} — اضغط للتبديل
+          </div>
+        )}
+
+        {/* Auto-cycling progress bar */}
+        {!paused && (
+          <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/20">
+            <div
+              className="h-full bg-[#006C35] animate-progress"
+              style={{ animationDuration: '2.5s', animationDelay: `${delay}ms` }}
+            />
+          </div>
+        )}
       </div>
 
-      {/* Toggle buttons */}
-      <div className="p-4">
-        <p className="text-xs text-gray-500 text-center mb-3 font-bold">{pair.result}</p>
-        <div className="flex rounded-xl overflow-hidden border border-gray-200">
-          <button
-            onClick={() => setShowAfter(false)}
-            className={`flex-1 py-2.5 text-sm font-black transition-all ${
-              !showAfter ? 'bg-gray-800 text-white' : 'bg-white text-gray-500 hover:bg-gray-50'
-            }`}
-          >
-            قبل
-          </button>
-          <button
-            onClick={() => setShowAfter(true)}
-            className={`flex-1 py-2.5 text-sm font-black transition-all ${
-              showAfter ? 'bg-[#006C35] text-white' : 'bg-white text-gray-500 hover:bg-gray-50'
-            }`}
-          >
-            بعد ✨
-          </button>
-        </div>
+      {/* Result label */}
+      <div className="p-3 text-center">
+        <p className="text-xs text-gray-500 font-bold">{pair.result}</p>
       </div>
     </div>
   );
@@ -138,10 +168,10 @@ export default function PhotoShowcase() {
           </p>
         </div>
 
-        {/* Before / After Cards */}
+        {/* Before / After Cards — auto-animate, staggered */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto mb-14">
           {PAIRS.map((pair, i) => (
-            <BeforeAfterCard key={i} pair={pair} />
+            <BeforeAfterCard key={i} pair={pair} delay={i * 400} />
           ))}
         </div>
 
