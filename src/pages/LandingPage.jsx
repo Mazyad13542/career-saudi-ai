@@ -19,8 +19,8 @@ export default function LandingPage() {
         <SaudiMarket />
         <Problem />
         <Features />
-        <Pricing />
         <Testimonials />
+        <Pricing />
         <HowItWorks />
         <FAQ />
         <CTA />
