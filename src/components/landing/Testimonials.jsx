@@ -184,7 +184,7 @@ export default function Testimonials() {
           {[
             { icon: '📝', text: 'سيرة ذاتية ATS احترافية' },
             { icon: '🌐', text: 'موقع شخصي مخصص' },
-            { icon: '📤', text: 'تقديم على ١٠٠+ شركة' },
+            { icon: '📤', text: 'تقديم على ٢٠٠+ شركة' },
             { icon: '💬', text: 'متابعة الردود والمقابلات' },
             { icon: '🇸🇦', text: 'خدمة تنفيذية سعودية' },
           ].map((b) => (
