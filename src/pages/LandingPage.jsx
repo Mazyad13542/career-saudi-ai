@@ -17,11 +17,11 @@ export default function LandingPage() {
       <main>
         <Hero />
         <SaudiMarket />
-        <Problem />
         <Features />
         <Testimonials />
         <Pricing />
         <HowItWorks />
+        <Problem />
         <FAQ />
         <CTA />
       </main>
