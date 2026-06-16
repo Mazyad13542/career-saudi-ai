@@ -47,6 +47,7 @@ export default function IntakeForm() {
     // Step 1
     full_name: '',
     phone: '',
+    birth_date: '',
     region: '',
     city: '',
     // Step 2
@@ -54,6 +55,7 @@ export default function IntakeForm() {
     degree: '',
     major: '',
     graduation_year: '',
+    certificates: '',
     // Step 3
     experience_years: '',
     last_job_title: '',
@@ -88,12 +90,14 @@ export default function IntakeForm() {
           user_id:          user.id,
           full_name:        formData.full_name,
           phone:            formData.phone,
+          birth_date:       formData.birth_date || null,
           region:           formData.region,
           city:             formData.city,
           university:       formData.university,
           degree:           formData.degree,
           major:            formData.major,
           graduation_year:  formData.graduation_year,
+          certificates:     formData.certificates,
           experience_years: formData.experience_years,
           last_job_title:   formData.last_job_title,
           last_company:     formData.last_company,
@@ -126,7 +130,7 @@ export default function IntakeForm() {
             <CheckCircle size={56} className="text-[#006C35] mx-auto mb-5" />
             <h2 className="text-xl font-black text-gray-900 mb-3">تم إرسال معلوماتك بنجاح!</h2>
             <p className="text-gray-500 text-sm leading-relaxed">
-              ستصلك جميع خدماتك الست على واتساب خلال <span className="font-black text-[#006C35]">٨ ساعات عمل</span>.
+              سنتواصل معك خلال <span className="font-black text-[#006C35]">٨ ساعات</span> على واتساب بجميع خدماتك جاهزة.
             </p>
           </div>
         </div>
@@ -181,6 +185,15 @@ export default function IntakeForm() {
                   onChange={(e) => set('phone', e.target.value)}
                   className={inputCls}
                   placeholder="05XXXXXXXX"
+                  dir="ltr"
+                />
+              </Field>
+              <Field label="تاريخ الميلاد">
+                <input
+                  type="date"
+                  value={formData.birth_date}
+                  onChange={(e) => set('birth_date', e.target.value)}
+                  className={inputCls}
                   dir="ltr"
                 />
               </Field>
@@ -253,6 +266,14 @@ export default function IntakeForm() {
                     <option key={y} value={y}>{y}</option>
                   ))}
                 </select>
+              </Field>
+              <Field label="الشهادات والدورات (اختياري)">
+                <textarea
+                  value={formData.certificates}
+                  onChange={(e) => set('certificates', e.target.value)}
+                  className={`${inputCls} min-h-[90px] resize-none`}
+                  placeholder="مثال: شهادة PMP، دورة في تحليل البيانات من Coursera، AWS Cloud Practitioner..."
+                />
               </Field>
             </>
           )}

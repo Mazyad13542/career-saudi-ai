@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Sparkles, FileText, Globe, Building2 } from 'lucide-react';
 import Button from '../ui/Button';
-import { useAuth } from '../../context/AuthContext';
 
 const socialProof = [
   { icon: FileText,   value: '+٣,٢٠٠', label: 'ملف مهني جُهِّز' },
@@ -10,9 +9,6 @@ const socialProof = [
 ];
 
 export default function CTA() {
-  const { session } = useAuth();
-  const ctaHref = session ? '/dashboard' : '/register';
-
   return (
     <section className="py-24 bg-gray-950 relative overflow-hidden" dir="rtl">
       <div className="absolute inset-0 saudi-geo-pattern opacity-[0.05] pointer-events-none" />
@@ -36,7 +32,7 @@ export default function CTA() {
         </h2>
 
         <p className="text-gray-400 text-lg mb-3 max-w-2xl mx-auto leading-loose">
-          سيرتك الذاتية، موقعك الشخصي، والتقديم على ١٠٠+ شركة سعودية — كل شيء جاهز خلال ٧٢ ساعة.
+          سيرتك الذاتية، موقعك الشخصي، والتقديم على ١٠٠+ شركة سعودية — كل شيء جاهز خلال ٨ ساعات.
         </p>
 
         <p className="text-[#C8A951] font-bold text-base mb-10">
@@ -60,16 +56,16 @@ export default function CTA() {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-          <Link to={ctaHref}>
+          <Link to="/order">
             <Button variant="primary" size="xl" className="w-full sm:w-auto shadow-xl-saudi">
               <Sparkles size={18} />
-              {session ? 'الذهاب إلى لوحة التحكم' : 'ابدأ تجهيز ملفك المهني'}
+              اشترِ الخدمة — ١٩٩ ر.س
               <ArrowLeft size={18} className="icon-rtl-flip" />
             </Button>
           </Link>
-          <a href={session ? '/dashboard' : '#pricing'}>
+          <a href="#pricing">
             <Button variant="secondary" size="xl" className="w-full sm:w-auto border-gray-700 bg-gray-900 text-white hover:bg-gray-800">
-              اطلب التقديم على ١٠٠ شركة
+              اطّلع على ما تشمله الخدمة
             </Button>
           </a>
         </div>
@@ -78,7 +74,7 @@ export default function CTA() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-gray-500 mb-14">
           <div className="flex items-center gap-2">
             <span className="text-[#C8A951]">✓</span>
-            نتائج خلال ٧٢ ساعة
+            نتائج خلال ٨ ساعات
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[#C8A951]">✓</span>

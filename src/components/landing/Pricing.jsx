@@ -1,20 +1,17 @@
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Check, Crown, Flame, Users } from 'lucide-react';
-import PaymentModal from '../payment/PaymentModal';
 
 const FEATURES = [
-  'تنظيم صفحة LinkedIn باحترافية',
-  'موقع شخصي رسمي (شهادات + خبرات + أعمال)',
-  'تنقيح صورتك الشخصية احترافياً',
-  'تصميم سيرة ذاتية CV احترافية',
-  'رسالة تقديم احترافية مخصصة',
+  'تنظيم حساب LinkedIn الاحترافي',
+  'إنشاء موقع شخصي رسمي',
+  'تصميم صورة شخصية احترافية',
+  'تصميم سيرة ذاتية CV',
+  'كتابة رسالة تقديم احترافية',
   'التقديم على ٢٠٠ شركة سعودية',
-  '⚡ التسليم خلال ٨ ساعات عمل على واتساب',
+  'التسليم على واتساب خلال ٨ ساعات',
 ];
 
 export default function Pricing() {
-  const [paymentOpen, setPaymentOpen] = useState(false);
-
   return (
     <section className="py-28 bg-gray-950 relative overflow-hidden" id="pricing" dir="rtl">
       {/* Background layers */}
@@ -98,9 +95,9 @@ export default function Pricing() {
               </div>
 
               {/* CTA Button */}
-              <button
-                onClick={() => setPaymentOpen(true)}
-                className="w-full py-4 text-base font-black text-white rounded-2xl mb-8 relative overflow-hidden group transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+              <Link
+                to="/order"
+                className="w-full py-4 text-base font-black text-white rounded-2xl mb-8 relative overflow-hidden group transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2"
                 style={{
                   background: 'linear-gradient(135deg, #006C35 0%, #00A651 50%, #006C35 100%)',
                   backgroundSize: '200% 100%',
@@ -111,9 +108,9 @@ export default function Pricing() {
                      style={{ background: 'linear-gradient(135deg, #00A651 0%, #006C35 100%)' }} />
                 <span className="relative flex items-center justify-center gap-2">
                   <Crown size={18} className="text-[#C8A951]" />
-                  ابدأ الآن
+                  اشترِ الخدمة الآن
                 </span>
-              </button>
+              </Link>
 
               {/* Features */}
               <ul className="space-y-3.5">
@@ -148,7 +145,6 @@ export default function Pricing() {
         </p>
       </div>
 
-      <PaymentModal isOpen={paymentOpen} onClose={() => setPaymentOpen(false)} />
     </section>
   );
 }

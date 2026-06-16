@@ -255,6 +255,7 @@ CREATE TABLE IF NOT EXISTS public.client_intake (
   -- Personal
   full_name        TEXT,
   phone            TEXT,
+  birth_date       DATE,
   region           TEXT,
   city             TEXT,
   -- Education
@@ -262,6 +263,7 @@ CREATE TABLE IF NOT EXISTS public.client_intake (
   degree           TEXT,
   major            TEXT,
   graduation_year  TEXT,
+  certificates     TEXT,
   -- Experience
   experience_years TEXT,
   last_job_title   TEXT,
