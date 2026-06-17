@@ -51,6 +51,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ url: data.url, transactionNo: data.transactionNo });
   } catch (err) {
     console.error('PayLink fetch error:', err);
-    return res.status(500).json({ error: 'خطأ في الاتصال بخادم الدفع' });
+    return res.status(500).json({ error: 'خطأ في الاتصال بخادم الدفع', detail: String(err), hasApiId: !!process.env.PAYLINK_API_ID, hasSecret: !!process.env.PAYLINK_SECRET_KEY });
   }
 }
