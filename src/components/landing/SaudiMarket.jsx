@@ -104,19 +104,19 @@ export default function SaudiMarket() {
             <div className="relative h-[420px] flex items-center justify-center">
               {/* Card 3 — back right */}
               <div className="absolute right-0 top-6 w-[200px] rounded-2xl overflow-hidden shadow-lg border border-gray-200 rotate-[4deg] z-10">
-                <img src="/cv-sample-3.jpg" alt="نموذج سيرة ذاتية ٣" className="w-full object-cover object-top" />
+                <img src="/cv-sample-3.png" alt="نموذج سيرة ذاتية ٣" className="w-full object-cover object-top" />
                 <div className="absolute inset-0 bg-white/20" />
               </div>
 
               {/* Card 1 — back left */}
               <div className="absolute left-0 top-6 w-[200px] rounded-2xl overflow-hidden shadow-lg border border-gray-200 -rotate-[4deg] z-10">
-                <img src="/cv-sample-1.jpg" alt="نموذج سيرة ذاتية ١" className="w-full object-cover object-top" />
+                <img src="/cv-sample-1.png" alt="نموذج سيرة ذاتية ١" className="w-full object-cover object-top" />
                 <div className="absolute inset-0 bg-white/20" />
               </div>
 
               {/* Card 2 — front center */}
               <div className="relative w-[220px] rounded-2xl overflow-hidden shadow-2xl shadow-[#006C35]/15 border-2 border-[#006C35]/20 z-20">
-                <img src="/cv-sample-2.jpg" alt="نموذج سيرة ذاتية ٢" className="w-full object-cover object-top" />
+                <img src="/cv-sample-2.png" alt="نموذج سيرة ذاتية ٢" className="w-full object-cover object-top" />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#006C35] to-transparent py-3 px-3">
                   <p className="text-white text-[10px] font-black">تصميم قِمّة الاحترافي ✓</p>
                 </div>
