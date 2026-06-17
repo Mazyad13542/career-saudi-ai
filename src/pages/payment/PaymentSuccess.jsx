@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
 
-const OWNER_WHATSAPP = '966500000000';
+const OWNER_WHATSAPP = '966550586382';
 
 export default function PaymentSuccess() {
   const [params] = useSearchParams();
