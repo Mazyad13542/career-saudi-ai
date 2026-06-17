@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  CheckCircle, ShoppingCart, User, Phone, Mail, Briefcase, Clock,
+  CheckCircle, ShoppingCart, User, Phone, Mail,
   Link2, ChevronLeft, Loader2, MapPin, Globe, GraduationCap,
-  Upload, X, Plus, Trash2, Tag, Languages, Award, Target,
+  Upload, X, Plus, Target,
 } from 'lucide-react';
 
 const OWNER_WHATSAPP = '966550586382';
@@ -17,11 +17,7 @@ const SERVICES = [
   'التقديم على ٢٠٠ شركة سعودية',
 ];
 
-const SUGGESTED_SKILLS = ['Excel','Power BI','AutoCAD','Python','Revit','SolidWorks','SQL','Photoshop','SAP','MATLAB'];
-const SUGGESTED_JOBS   = ['Mechanical Engineer','HVAC Engineer','Project Engineer','Electrical Engineer','Software Engineer','Data Analyst','Civil Engineer','Business Analyst'];
-const LANGUAGES        = ['العربية','الإنجليزية','الفرنسية','الألمانية','اليابانية','الصينية'];
-
-const emptyExp = () => ({ company: '', title: '', startDate: '', endDate: '', current: false, description: '' });
+const SUGGESTED_JOBS = ['Mechanical Engineer','HVAC Engineer','Project Engineer','Electrical Engineer','Software Engineer','Data Analyst','Civil Engineer','Business Analyst'];
 
 // ─── File Upload Component ──────────────────────────────────────────────────
 function FileUpload({ label, accept, required, file, onChange, hint }) {
@@ -148,21 +144,10 @@ export default function Order() {
   // Section 2 — Files
   const [files, setFiles] = useState({ cv: null, photo: null, certificates: null, extra: null });
 
-  // Section 3 — Professional
-  const [prof, setProf] = useState({ title: '', specialty: '', experience: '', bio: '' });
-
-  // Section 4 — Education
+  // Section 3 — Education
   const [edu, setEdu] = useState({ university: '', degree: '', gradYear: '', gpa: '' });
 
-  // Section 5 — Work Experience
-  const [experiences, setExperiences] = useState([emptyExp()]);
-
-  // Section 6 — Skills & Certs
-  const [skills, setSkills]   = useState([]);
-  const [langs, setLangs]     = useState(['العربية','الإنجليزية']);
-  const [certs, setCerts]     = useState('');
-
-  // Section 7 — Job Target
+  // Section 4 — Job Target
   const [targetJobs, setTargetJobs] = useState([]);
   const [jobLevel, setJobLevel]     = useState('');
 
@@ -171,19 +156,12 @@ export default function Order() {
   const [payError, setPayError] = useState('');
 
   const setB = (k, v) => setBasic(p => ({ ...p, [k]: v }));
-  const setP = (k, v) => setProf(p => ({ ...p, [k]: v }));
   const setE = (k, v) => setEdu(p => ({ ...p, [k]: v }));
-
-  const updateExp = (i, k, v) => setExperiences(prev => prev.map((e, idx) => idx === i ? { ...e, [k]: v } : e));
-  const addExp    = () => setExperiences(p => [...p, emptyExp()]);
-  const removeExp = (i) => setExperiences(p => p.filter((_, idx) => idx !== i));
 
   const validate = () => {
     const e = {};
     if (!basic.name.trim())     e.name     = 'مطلوب';
     if (!basic.whatsapp.trim()) e.whatsapp = 'مطلوب';
-    if (!prof.specialty.trim()) e.specialty = 'مطلوب';
-    if (!prof.experience)       e.experience = 'مطلوب';
     if (!files.photo)           e.photo    = 'الصورة الشخصية مطلوبة';
     setErrors(e);
     return Object.keys(e).length === 0;
@@ -202,12 +180,9 @@ export default function Order() {
     const note = [
       `المدينة: ${basic.city || '—'} | الجنسية: ${basic.nationality || '—'}`,
       `LinkedIn: ${basic.linkedin || '—'}`,
-      `التخصص: ${prof.specialty} | الخبرة: ${prof.experience}`,
       `التعليم: ${edu.degree || '—'} — ${edu.university || '—'} ${edu.gradYear || ''}`,
-      `المهارات: ${skills.join(', ') || '—'}`,
-      `اللغات: ${langs.join(', ')}`,
       `الوظائف المستهدفة: ${targetJobs.join(', ') || '—'} | المستوى: ${jobLevel || '—'}`,
-      files.cv    ? `✅ CV مرفق: ${files.cv.name}`    : '⬜ لا يوجد CV',
+      files.cv    ? `✅ CV مرفق: ${files.cv.name}`       : '⬜ لا يوجد CV',
       files.photo ? `✅ صورة مرفقة: ${files.photo.name}` : '',
     ].filter(Boolean).join('\n');
 
@@ -220,8 +195,7 @@ export default function Order() {
       const data = await res.json();
       if (!res.ok || !data.url) { setPayError('حدث خطأ في إنشاء رابط الدفع، حاول مرة أخرى.'); setLoading(false); return; }
 
-      // Save form data locally for admin WhatsApp message
-      localStorage.setItem('qimma_order', JSON.stringify({ basic, prof, edu, experiences, skills, langs, certs, targetJobs, jobLevel }));
+      localStorage.setItem('qimma_order', JSON.stringify({ basic, edu, targetJobs, jobLevel }));
 
       window.location.href = data.url;
     } catch {
@@ -372,45 +346,9 @@ export default function Order() {
                 </div>
               </div>
 
-              {/* ── Section 3: Professional ── */}
+              {/* ── Section 3: Education ── */}
               <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
-                <SectionHeader num="٣" title="المعلومات المهنية" icon={Briefcase} />
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-bold text-gray-700 block mb-1.5">المسمى الوظيفي الحالي</label>
-                    <input type="text" placeholder="مهندس برمجيات" value={prof.title}
-                      onChange={e => setP('title', e.target.value)} className={inputCls()} />
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold text-gray-700 block mb-1.5">التخصص أو المجال <span className="text-red-400">*</span></label>
-                    <input type="text" placeholder="هندسة برمجيات / محاسبة / تسويق..." value={prof.specialty}
-                      onChange={e => setP('specialty', e.target.value)} className={inputCls(errors.specialty)} />
-                    {errors.specialty && <p className="text-xs text-red-500 mt-1 font-bold">{errors.specialty}</p>}
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold text-gray-700 block mb-1.5">سنوات الخبرة <span className="text-red-400">*</span></label>
-                    <select value={prof.experience} onChange={e => setP('experience', e.target.value)} className={inputCls(errors.experience)}>
-                      <option value="">اختر</option>
-                      <option>حديث تخرج</option>
-                      <option>أقل من سنة</option>
-                      <option>١ – ٣ سنوات</option>
-                      <option>٣ – ٥ سنوات</option>
-                      <option>أكثر من ٥ سنوات</option>
-                    </select>
-                    {errors.experience && <p className="text-xs text-red-500 mt-1 font-bold">{errors.experience}</p>}
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold text-gray-700 block mb-1.5">نبذة مختصرة عن نفسك <span className="text-gray-400 font-normal">(اختياري)</span></label>
-                    <textarea rows={3} placeholder="اكتب نبذة مختصرة تصف شخصيتك المهنية وأبرز إنجازاتك..."
-                      value={prof.bio} onChange={e => setP('bio', e.target.value)}
-                      className="w-full px-4 py-3 text-sm bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#006C35]/30 focus:border-[#006C35] transition-all resize-none" />
-                  </div>
-                </div>
-              </div>
-
-              {/* ── Section 4: Education ── */}
-              <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
-                <SectionHeader num="٤" title="التعليم" icon={GraduationCap} />
+                <SectionHeader num="٣" title="التعليم" icon={GraduationCap} />
                 <div className="space-y-4">
                   <div>
                     <label className="text-sm font-bold text-gray-700 block mb-1.5">اسم الجامعة أو الكلية</label>
@@ -442,96 +380,9 @@ export default function Order() {
                 </div>
               </div>
 
-              {/* ── Section 5: Work Experience ── */}
+              {/* ── Section 4: Job Target ── */}
               <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
-                <SectionHeader num="٥" title="الخبرات العملية" icon={Clock} />
-                <div className="space-y-5">
-                  {experiences.map((exp, i) => (
-                    <div key={i} className="relative p-4 border border-gray-100 rounded-2xl bg-gray-50/50 space-y-3">
-                      {experiences.length > 1 && (
-                        <button type="button" onClick={() => removeExp(i)}
-                          className="absolute top-3 left-3 text-gray-300 hover:text-red-500 transition-colors">
-                          <Trash2 size={14} />
-                        </button>
-                      )}
-                      <p className="text-xs font-black text-gray-400 mb-1">الخبرة {i + 1}</p>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-xs font-bold text-gray-600 block mb-1">اسم الشركة</label>
-                          <input type="text" placeholder="أرامكو السعودية" value={exp.company}
-                            onChange={e => updateExp(i, 'company', e.target.value)} className={inputCls()} />
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-gray-600 block mb-1">المسمى الوظيفي</label>
-                          <input type="text" placeholder="مهندس مشاريع" value={exp.title}
-                            onChange={e => updateExp(i, 'title', e.target.value)} className={inputCls()} />
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-xs font-bold text-gray-600 block mb-1">تاريخ البداية</label>
-                          <input type="month" value={exp.startDate}
-                            onChange={e => updateExp(i, 'startDate', e.target.value)} className={`${inputCls()} text-gray-600`} dir="ltr" />
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-gray-600 block mb-1">تاريخ النهاية</label>
-                          <input type="month" value={exp.endDate} disabled={exp.current}
-                            onChange={e => updateExp(i, 'endDate', e.target.value)} className={`${inputCls()} text-gray-600 disabled:bg-gray-100`} dir="ltr" />
-                          <label className="inline-flex items-center gap-1.5 mt-1 cursor-pointer">
-                            <input type="checkbox" checked={exp.current} onChange={e => updateExp(i, 'current', e.target.checked)} className="accent-[#006C35]" />
-                            <span className="text-xs text-gray-500 font-bold">حتى الآن</span>
-                          </label>
-                        </div>
-                      </div>
-                      <div>
-                        <label className="text-xs font-bold text-gray-600 block mb-1">وصف المهام</label>
-                        <textarea rows={2} placeholder="اذكر أبرز مهامك وإنجازاتك في هذا الدور..."
-                          value={exp.description} onChange={e => updateExp(i, 'description', e.target.value)}
-                          className="w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#006C35]/30 focus:border-[#006C35] transition-all resize-none" />
-                      </div>
-                    </div>
-                  ))}
-                  <button type="button" onClick={addExp}
-                    className="w-full py-2.5 border-2 border-dashed border-[#006C35]/25 rounded-2xl text-sm font-black text-[#006C35]/70 hover:border-[#006C35]/50 hover:text-[#006C35] hover:bg-[#006C35]/5 transition-all flex items-center justify-center gap-2">
-                    <Plus size={16} /> إضافة خبرة جديدة
-                  </button>
-                </div>
-              </div>
-
-              {/* ── Section 6: Skills ── */}
-              <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
-                <SectionHeader num="٦" title="المهارات والشهادات" icon={Tag} />
-                <div className="space-y-5">
-                  <div>
-                    <label className="text-sm font-bold text-gray-700 block mb-2">المهارات التقنية</label>
-                    <TagInput tags={skills} onChange={setSkills} suggestions={SUGGESTED_SKILLS} placeholder="اكتب مهارة ثم Enter" />
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold text-gray-700 block mb-2">اللغات</label>
-                    <div className="flex flex-wrap gap-2">
-                      {LANGUAGES.map(l => (
-                        <button key={l} type="button"
-                          onClick={() => setLangs(p => p.includes(l) ? p.filter(x => x !== l) : [...p, l])}
-                          className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
-                            langs.includes(l) ? 'bg-[#006C35] text-white' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
-                          }`}>
-                          {l}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <label className="text-sm font-bold text-gray-700 block mb-1.5">الشهادات والدورات <span className="text-gray-400 font-normal">(اختياري)</span></label>
-                    <textarea rows={3} placeholder="مثال: PMP — Project Management Professional&#10;Google Data Analytics Certificate — Coursera&#10;IELTS 7.5"
-                      value={certs} onChange={e => setCerts(e.target.value)}
-                      className="w-full px-4 py-3 text-sm bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#006C35]/30 focus:border-[#006C35] transition-all resize-none" />
-                  </div>
-                </div>
-              </div>
-
-              {/* ── Section 7: Job Target ── */}
-              <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6">
-                <SectionHeader num="٧" title="معلومات التوظيف" icon={Target} />
+                <SectionHeader num="٤" title="معلومات التوظيف" icon={Target} />
                 <div className="space-y-5">
                   <div>
                     <label className="text-sm font-bold text-gray-700 block mb-2">الوظائف المستهدفة</label>
