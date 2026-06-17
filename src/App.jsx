@@ -99,8 +99,8 @@ export default function App() {
           <Route path="/privacy"     element={<Privacy />} />
           <Route path="/onboarding"  element={<PrivateRoute><Onboarding /></PrivateRoute>} />
 
-          {/* ── Payment (requires auth) ── */}
-          <Route path="/payment-success" element={<PrivateRoute><PaymentSuccess /></PrivateRoute>} />
+          {/* ── Payment (public — PayLink redirects here after payment) ── */}
+          <Route path="/payment-success" element={<PaymentSuccess />} />
 
           {/* ── Candidate Dashboard (requires auth) ── */}
           <Route path="/dashboard"              element={<PrivateRoute><Overview /></PrivateRoute>} />
