@@ -1,33 +1,27 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { CheckCircle, Crown, FileText, Briefcase, ClipboardList, Mic, TrendingUp, Star } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import { CheckCircle } from 'lucide-react';
 
-const FEATURES = [
-  { icon: FileText,      label: 'تحليل السيرة الذاتية المتقدم' },
-  { icon: Briefcase,     label: 'تقديم مباشر على الوظائف' },
-  { icon: ClipboardList, label: 'متابعة كاملة للتقديمات' },
-  { icon: Mic,           label: 'مقابلات تجريبية غير محدودة' },
-  { icon: TrendingUp,    label: 'تحليلات الأداء المهني' },
-  { icon: Star,          label: 'وظائف مميزة حصرية' },
-];
+const OWNER_WHATSAPP = '966550586382';
 
 export default function PaymentSuccess() {
-  const navigate           = useNavigate();
-  const { profile, isPremium, refreshProfile } = useAuth();
-  const [countdown, setCountdown] = useState(10);
+  const [params] = useSearchParams();
+  const transactionNo = params.get('transactionNo') || params.get('orderNumber') || '';
 
   useEffect(() => {
-    refreshProfile?.();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    if (countdown <= 0) { navigate('/dashboard'); return; }
-    const t = setTimeout(() => setCountdown((c) => c - 1), 1000);
+    if (!transactionNo) return;
+    const msg = [
+      '✅ *دفع مكتمل — قِمّة*',
+      '',
+      `🧾 رقم المعاملة: ${transactionNo}`,
+      '',
+      'يرجى البدء بتجهيز الباقة الكاملة للعميل.',
+    ].join('\n');
+    const t = setTimeout(() => {
+      window.open(`https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
+    }, 1000);
     return () => clearTimeout(t);
-  }, [countdown, navigate]);
-
-  const name = profile?.full_name?.split(' ')[0] || 'عزيزي المستخدم';
+  }, [transactionNo]);
 
   return (
     <div
@@ -36,63 +30,42 @@ export default function PaymentSuccess() {
       style={{ background: 'linear-gradient(135deg, #004a23 0%, #006C35 50%, #005a2b 100%)' }}
     >
       <div className="absolute inset-0 saudi-geo-pattern opacity-[0.04] pointer-events-none" />
-      <div className="absolute top-20 right-1/4 w-96 h-96 bg-[#C8A951]/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-20 left-1/4 w-64 h-64 bg-white/5 rounded-full blur-2xl pointer-events-none" />
 
-      <div className="relative w-full max-w-lg">
+      <div className="relative w-full max-w-md">
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
           <div className="h-1 bg-gradient-to-l from-transparent via-[#C8A951] to-transparent" />
 
-          {/* Top section */}
-          <div className="text-center px-8 pt-10 pb-8">
-            <div className="relative inline-block mb-6">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                <CheckCircle size={40} className="text-[#006C35]" />
-              </div>
-              <div className="absolute -top-1 -right-1 w-7 h-7 bg-[#C8A951] rounded-full flex items-center justify-center shadow-lg">
-                <Crown size={13} className="text-white" />
-              </div>
+          <div className="text-center px-8 pt-10 pb-10">
+            <div className="w-20 h-20 bg-[#006C35]/10 rounded-full flex items-center justify-center mx-auto mb-5">
+              <CheckCircle size={40} className="text-[#006C35]" />
             </div>
 
-            <h1 className="text-2xl font-black text-gray-900 mb-2">
-              مبروك، {name}! 🎉
-            </h1>
-            <p className="text-gray-500 text-sm leading-relaxed mb-4">
-              تم تفعيل الخطة الاحترافية بنجاح. أنت الآن تملك وصولاً كاملاً لجميع أدوات قِمّة.
+            <h1 className="text-2xl font-black text-gray-900 mb-2">تم الدفع بنجاح 🎉</h1>
+            <p className="text-gray-500 text-sm leading-relaxed mb-2">
+              شكراً لك — سنبدأ العمل على باقتك فوراً.
             </p>
-
-            {isPremium() && (
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#C8A951]/15 border border-[#C8A951]/30 rounded-full text-sm font-black text-amber-700">
-                <Crown size={13} className="text-[#C8A951]" />
-                الخطة الاحترافية — مفعّلة
-              </span>
+            {transactionNo && (
+              <p className="text-xs text-gray-400 mb-5 font-bold">رقم المعاملة: {transactionNo}</p>
             )}
-          </div>
-
-          {/* Features unlocked */}
-          <div className="px-8 pb-8">
-            <p className="text-xs font-black text-gray-400 mb-4 text-center uppercase tracking-widest">ما تم فتحه</p>
-            <div className="grid grid-cols-2 gap-3 mb-8">
-              {FEATURES.map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-2 p-3 bg-[#006C35]/5 rounded-xl border border-[#006C35]/10">
-                  <Icon size={15} className="text-[#006C35] flex-shrink-0" />
-                  <span className="text-xs font-bold text-gray-700">{label}</span>
-                </div>
-              ))}
-            </div>
-
-            <Link
-              to="/dashboard"
-              className="block w-full py-3.5 text-center text-sm font-black text-white bg-[#006C35] rounded-2xl hover:bg-[#005a2b] active:scale-[0.98] transition-all"
-            >
-              الذهاب إلى لوحة التحكم
-            </Link>
-
-            <p className="text-center text-xs text-gray-400 mt-3">
-              التحويل التلقائي خلال{' '}
-              <span className="font-black text-[#006C35]">{countdown}</span>
-              {' '}ثانية
+            <p className="text-gray-500 text-sm leading-relaxed mb-8">
+              سيتواصل معك فريقنا على <strong>واتساب</strong> خلال <strong>٨ ساعات</strong> لتسليم جميع الخدمات.
             </p>
+
+            <div className="space-y-3">
+              <a
+                href={`https://wa.me/${OWNER_WHATSAPP}`}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-black text-white text-sm"
+                style={{ background: '#25D366' }}
+              >
+                <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                تواصل معنا على واتساب
+              </a>
+              <Link to="/" className="block text-sm text-gray-400 hover:text-gray-600 font-bold py-2">
+                العودة للصفحة الرئيسية
+              </Link>
+            </div>
           </div>
         </div>
       </div>

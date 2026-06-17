@@ -6,7 +6,7 @@ import {
   Upload, X, Plus, Trash2, Tag, Languages, Award, Target,
 } from 'lucide-react';
 
-const OWNER_WHATSAPP = '966500000000';
+const OWNER_WHATSAPP = '966550586382';
 
 const SERVICES = [
   'تنظيم ملف LinkedIn احترافي',
