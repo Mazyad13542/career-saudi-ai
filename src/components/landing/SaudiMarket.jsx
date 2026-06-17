@@ -83,7 +83,7 @@ export default function SaudiMarket() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
 
-          {/* CV Mockup */}
+          {/* CV Mockup — real samples */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, x: 30 }}
@@ -92,7 +92,7 @@ export default function SaudiMarket() {
             transition={{ duration: 0.55 }}
           >
             {/* ATS Score Badge */}
-            <div className="absolute -top-4 -left-4 z-10 bg-white border border-[#C8A951]/30 rounded-2xl px-4 py-3 shadow-xl">
+            <div className="absolute -top-4 -left-4 z-20 bg-white border border-[#C8A951]/40 rounded-2xl px-4 py-3 shadow-xl">
               <p className="text-[10px] text-gray-400 font-bold mb-0.5">ATS Score</p>
               <div className="flex items-end gap-1">
                 <span className="text-2xl font-black text-[#006C35]">٩٧</span>
@@ -100,93 +100,34 @@ export default function SaudiMarket() {
               </div>
             </div>
 
-            {/* CV Document */}
-            <div className="bg-white rounded-3xl border border-gray-200 shadow-2xl shadow-gray-200/60 overflow-hidden" dir="rtl">
-              {/* Header strip */}
-              <div className="bg-gradient-to-l from-gray-900 to-gray-800 px-6 py-5">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-b from-[#006C35] to-[#00A651] flex items-center justify-center text-xl font-black text-white shadow-lg flex-shrink-0">
-                    ع
-                  </div>
-                  <div>
-                    <p className="text-white font-black text-base">عبدالرحمن محمد السهلي</p>
-                    <p className="text-gray-300 text-xs mt-0.5">مدير مشاريع تقنية المعلومات · PMP Certified</p>
-                    <div className="flex gap-2 mt-1.5">
-                      <span className="text-[9px] text-gray-400">الرياض</span>
-                      <span className="text-gray-600">·</span>
-                      <span className="text-[9px] text-gray-400 latin" dir="ltr">linkedin.com/in/alsuhli</span>
-                    </div>
-                  </div>
-                </div>
+            {/* 3 stacked CV images */}
+            <div className="relative h-[420px] flex items-center justify-center">
+              {/* Card 3 — back right */}
+              <div className="absolute right-0 top-6 w-[200px] rounded-2xl overflow-hidden shadow-lg border border-gray-200 rotate-[4deg] z-10">
+                <img src="/cv-sample-3.jpg" alt="نموذج سيرة ذاتية ٣" className="w-full object-cover object-top" />
+                <div className="absolute inset-0 bg-white/20" />
               </div>
 
-              {/* Body */}
-              <div className="p-5 space-y-4">
-                {/* Summary */}
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="h-px flex-1 bg-gray-100" />
-                    <p className="text-[9px] font-black text-[#006C35] uppercase tracking-widest">الملخص المهني</p>
-                    <div className="h-px flex-1 bg-gray-100" />
-                  </div>
-                  <div className="space-y-1">
-                    <div className="h-2 bg-gray-100 rounded-full w-full" />
-                    <div className="h-2 bg-gray-100 rounded-full w-4/5" />
-                    <div className="h-2 bg-gray-100 rounded-full w-3/4" />
-                  </div>
-                </div>
-
-                {/* Experience */}
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="h-px flex-1 bg-gray-100" />
-                    <p className="text-[9px] font-black text-[#006C35] uppercase tracking-widest">الخبرات</p>
-                    <div className="h-px flex-1 bg-gray-100" />
-                  </div>
-                  {[
-                    { role: 'مدير مشاريع أول', co: 'أرامكو السعودية', yrs: '٢٠٢٠ – الآن', dots: ['w-full','w-4/5','w-3/5'] },
-                    { role: 'مدير مشاريع', co: 'شركة STC', yrs: '٢٠١٧ – ٢٠٢٠', dots: ['w-4/5','w-3/4'] },
-                  ].map(e => (
-                    <div key={e.co} className="mb-3">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-[9px] text-gray-400 latin">{e.yrs}</span>
-                        <div>
-                          <p className="text-[11px] font-black text-gray-800 text-right">{e.role}</p>
-                          <p className="text-[9px] text-[#006C35] font-bold text-right">{e.co}</p>
-                        </div>
-                      </div>
-                      <div className="space-y-1 pr-1">
-                        {e.dots.map((w, i) => <div key={i} className={`h-1.5 bg-gray-100 rounded-full ${w}`} />)}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Skills */}
-                <div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="h-px flex-1 bg-gray-100" />
-                    <p className="text-[9px] font-black text-[#006C35] uppercase tracking-widest">المهارات</p>
-                    <div className="h-px flex-1 bg-gray-100" />
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {['Project Management','Agile / Scrum','MS Project','Risk Management','PMP','ITIL','Leadership'].map(sk => (
-                      <span key={sk} className="px-2 py-0.5 bg-[#006C35]/8 text-[#006C35] text-[8px] font-bold rounded-full latin">{sk}</span>
-                    ))}
-                  </div>
-                </div>
+              {/* Card 1 — back left */}
+              <div className="absolute left-0 top-6 w-[200px] rounded-2xl overflow-hidden shadow-lg border border-gray-200 -rotate-[4deg] z-10">
+                <img src="/cv-sample-1.jpg" alt="نموذج سيرة ذاتية ١" className="w-full object-cover object-top" />
+                <div className="absolute inset-0 bg-white/20" />
               </div>
 
-              {/* Footer badge */}
-              <div className="px-5 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-4 h-4 rounded gradient-saudi flex items-center justify-center">
-                    <span className="text-white text-[8px] font-black">ق</span>
-                  </div>
-                  <span className="text-[9px] font-black text-[#006C35]">صُمِّمت بواسطة قِمّة</span>
+              {/* Card 2 — front center */}
+              <div className="relative w-[220px] rounded-2xl overflow-hidden shadow-2xl shadow-[#006C35]/15 border-2 border-[#006C35]/20 z-20">
+                <img src="/cv-sample-2.jpg" alt="نموذج سيرة ذاتية ٢" className="w-full object-cover object-top" />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#006C35] to-transparent py-3 px-3">
+                  <p className="text-white text-[10px] font-black">تصميم قِمّة الاحترافي ✓</p>
                 </div>
-                <span className="text-[9px] text-gray-400 font-bold">ATS Ready ✓</span>
               </div>
+            </div>
+
+            {/* Bottom label */}
+            <div className="flex justify-center gap-3 mt-2">
+              {['نموذج ١','نموذج ٢','نموذج ٣'].map((l, i) => (
+                <div key={l} className={`px-3 py-1 rounded-full text-[10px] font-black ${i === 1 ? 'bg-[#006C35] text-white' : 'bg-gray-100 text-gray-400'}`}>{l}</div>
+              ))}
             </div>
           </motion.div>
 
