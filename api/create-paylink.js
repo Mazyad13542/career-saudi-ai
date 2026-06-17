@@ -31,7 +31,7 @@ export default async function handler(req, res) {
   };
 
   try {
-    const response = await fetch('https://restpaylink.sa/api/getInvoice', {
+    const response = await fetch('https://api.paylink.sa/api/addInvoice', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
