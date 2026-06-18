@@ -2,11 +2,12 @@ import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   CheckCircle, ShoppingCart, User, Phone, Mail,
-  Link2, ChevronLeft, Loader2, MapPin, Globe, GraduationCap,
+  Link2, ChevronLeft, MapPin, Globe, GraduationCap,
   Upload, X, Plus, Target,
 } from 'lucide-react';
 
 const OWNER_WHATSAPP = '966550586382';
+const SALLA_URL = 'https://salla.sa/km-586-hqYV/%D8%A8%D8%A7%D9%82%D8%A9-%D9%82%D9%85%D8%A9/p2015930776';
 
 const SERVICES = [
   'تنظيم ملف LinkedIn احترافي',
@@ -151,9 +152,7 @@ export default function Order() {
   const [targetJobs, setTargetJobs] = useState([]);
   const [jobLevel, setJobLevel]     = useState('');
 
-  const [errors, setErrors]   = useState({});
-  const [loading, setLoading] = useState(false);
-  const [payError, setPayError] = useState('');
+  const [errors, setErrors] = useState({});
 
   const setB = (k, v) => setBasic(p => ({ ...p, [k]: v }));
   const setE = (k, v) => setEdu(p => ({ ...p, [k]: v }));
@@ -167,41 +166,14 @@ export default function Order() {
     return Object.keys(e).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) {
       document.getElementById('form-top')?.scrollIntoView({ behavior: 'smooth' });
       return;
     }
-
-    setLoading(true);
-    setPayError('');
-
-    const note = [
-      `المدينة: ${basic.city || '—'} | الجنسية: ${basic.nationality || '—'}`,
-      `LinkedIn: ${basic.linkedin || '—'}`,
-      `التعليم: ${edu.degree || '—'} — ${edu.university || '—'} ${edu.gradYear || ''}`,
-      `الوظائف المستهدفة: ${targetJobs.join(', ') || '—'} | المستوى: ${jobLevel || '—'}`,
-      files.cv    ? `✅ CV مرفق: ${files.cv.name}`       : '⬜ لا يوجد CV',
-      files.photo ? `✅ صورة مرفقة: ${files.photo.name}` : '',
-    ].filter(Boolean).join('\n');
-
-    try {
-      const res = await fetch('/api/create-paylink', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: basic.name, mobile: basic.whatsapp, email: basic.email, notes: note }),
-      });
-      const data = await res.json();
-      if (!res.ok || !data.url) { setPayError('حدث خطأ في إنشاء رابط الدفع، حاول مرة أخرى.'); setLoading(false); return; }
-
-      localStorage.setItem('qimma_order', JSON.stringify({ basic, edu, targetJobs, jobLevel }));
-
-      window.location.href = data.url;
-    } catch {
-      setPayError('تعذّر الاتصال بخادم الدفع، حاول لاحقاً.');
-      setLoading(false);
-    }
+    localStorage.setItem('qimma_order', JSON.stringify({ basic, edu, targetJobs, jobLevel }));
+    window.location.href = SALLA_URL;
   };
 
   return (
@@ -407,17 +379,10 @@ export default function Order() {
 
               {/* ── Payment Button ── */}
               <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 space-y-4">
-                {payError && (
-                  <p className="text-center text-sm text-red-500 font-bold bg-red-50 rounded-xl py-2 px-3">{payError}</p>
-                )}
-                <button type="submit" disabled={loading}
-                  className="w-full py-4 rounded-2xl font-black text-base text-white flex items-center justify-center gap-2.5 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:scale-100"
+                <button type="submit"
+                  className="w-full py-4 rounded-2xl font-black text-base text-white flex items-center justify-center gap-2.5 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                   style={{ background: 'linear-gradient(135deg,#006C35,#00A651)', boxShadow: '0 6px 28px rgba(0,108,53,0.4)' }}>
-                  {loading ? (
-                    <><Loader2 size={20} className="animate-spin" /> جارٍ إنشاء رابط الدفع...</>
-                  ) : (
-                    <><ShoppingCart size={20} /> ادفع الآن — ١٩٩ ر.س</>
-                  )}
+                  <ShoppingCart size={20} /> ادفع الآن — ١٩٩ ر.س
                 </button>
                 <div className="flex items-center justify-center gap-3 flex-wrap">
                   <span className="text-xs text-gray-400 font-bold">يدعم:</span>
