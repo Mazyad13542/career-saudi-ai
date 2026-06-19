@@ -219,7 +219,7 @@ export default function Order() {
               <div className="relative p-5 text-white text-right">
                 <p className="text-xs text-green-300 font-bold mb-1">دفع مرة واحدة فقط</p>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-4xl font-black leading-none">١٩٩</span>
+                  <span className="text-4xl font-black leading-none">٩٩</span>
                   <span className="text-green-200 font-bold">ر.س</span>
                 </div>
                 <p className="text-xs text-green-300/70 mt-1">التسليم خلال ٨ ساعات على واتساب</p>
@@ -382,7 +382,7 @@ export default function Order() {
                 <button type="submit"
                   className="w-full py-4 rounded-2xl font-black text-base text-white flex items-center justify-center gap-2.5 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                   style={{ background: 'linear-gradient(135deg,#006C35,#00A651)', boxShadow: '0 6px 28px rgba(0,108,53,0.4)' }}>
-                  <ShoppingCart size={20} /> ادفع الآن — ١٩٩ ر.س
+                  <ShoppingCart size={20} /> ادفع الآن — ٩٩ ر.س
                 </button>
                 <div className="flex items-center justify-center gap-3 flex-wrap">
                   <span className="text-xs text-gray-400 font-bold">يدعم:</span>

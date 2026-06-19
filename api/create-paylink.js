@@ -11,12 +11,12 @@ export default async function handler(req, res) {
 
   const payload = {
     title: 'باقة قِمّة الكاملة',
-    value: 199,
+    value: 99,
     currency: 'SAR',
     products: [
       {
         title: 'باقة قِمّة الكاملة — ٦ خدمات مهنية',
-        price: 199,
+        price: 99,
         qty: 1,
       },
     ],

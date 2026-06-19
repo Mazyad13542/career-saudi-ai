@@ -112,7 +112,7 @@ export default function Hero() {
             <Link to="/order">
               <Button variant="primary" size="xl" className="w-full sm:w-auto shadow-xl-saudi">
                 <Sparkles size={18} />
-                اشترِ الخدمة — ١٩٩ ر.س
+                اشترِ الخدمة — ٩٩ ر.س
                 <ArrowLeft size={18} className="icon-rtl-flip" />
               </Button>
             </Link>

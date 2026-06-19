@@ -199,7 +199,7 @@ export default function PhotoShowcase() {
               className="flex items-center gap-2 px-8 py-3.5 rounded-2xl text-sm font-black text-white transition-all hover:scale-[1.03]"
               style={{ background: 'linear-gradient(135deg,#006C35,#00A651)', boxShadow: '0 8px 24px rgba(0,108,53,0.4)' }}
             >
-              اشترِ الباقة الكاملة — ١٩٩ ر.س
+              اشترِ الباقة الكاملة — ٩٩ ر.س
               <ArrowLeft size={16} />
             </a>
           </div>

@@ -77,14 +77,14 @@ export default function Pricing() {
                     <span className="text-sm font-black text-[#C8A951] px-2.5 py-0.5 bg-[#C8A951]/15 border border-[#C8A951]/25 rounded-full">
                       وفّر ٥٠٪
                     </span>
-                    <span className="text-lg text-gray-600 line-through font-bold">٣٩٩ ر.س</span>
+                    <span className="text-lg text-gray-600 line-through font-bold">١٩٩ ر.س</span>
                   </div>
 
                   {/* Main price */}
                   <div className="flex items-baseline gap-2">
                     <span className="text-7xl sm:text-8xl font-black text-white leading-none tabular-nums"
                           style={{ textShadow: '0 0 40px rgba(0,108,53,0.4)' }}>
-                      ١٩٩
+                      ٩٩
                     </span>
                     <span className="text-xl font-black text-[#00A651] self-end mb-1">ر.س</span>
                   </div>

@@ -5,7 +5,7 @@ import { X, Lock, Shield, CheckCircle, AlertCircle, Crown } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { track, EVENTS } from '../../lib/analytics';
 
-const SAR_AMOUNT   = '199';
+const SAR_AMOUNT   = '99';
 const SDK_CURRENCY = 'SAR';
 const PLAN_LABEL   = 'الاشتراك الكامل';
 const SUCCESS_PATH = '/payment-success';

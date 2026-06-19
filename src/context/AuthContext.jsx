@@ -103,7 +103,7 @@ export function AuthProvider({ children }) {
         user_id:         user.id,
         paypal_order_id: paypalOrderId,
         amount_usd:      53.07,
-        amount_sar:      199,
+        amount_sar:      99,
         status:          'completed',
         plan:            'professional',
         period_months:   1,
